@@ -3,6 +3,7 @@ import { Button, Text, View } from "react-native";
 import { createStackNavigator, NavigationStackProp } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import Main from "./src/Main";
+import DocViewerScreen from './src/DocViewerScreen'
 
 function HomeScreen(props: {
   navigation: NavigationStackProp;
@@ -19,8 +20,8 @@ function HomeScreen(props: {
         onPress={() => props.navigation.navigate('Main', { name: 'zhang' })}
       />
       <Button
-        title="to ItemDetails "
-        onPress={() => props.navigation.navigate('ItemDetails', { name: 'zhang' })}
+        title="to DocViewerScreen "
+        onPress={() => props.navigation.navigate('DocViewerScreen')}
       />
     </View>
   );
@@ -77,7 +78,8 @@ const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
     Details: DetailsScreen,
-    Main: Main
+    Main: Main,
+    DocViewerScreen
   },
   {
     initialRouteName: 'Home',

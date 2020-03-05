@@ -9,8 +9,11 @@
     "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
   },
   "dependencies": {
+    "@types/react-native-doc-viewer": "^2.7.1",
     "react": "16.8.3",
     "react-native": "0.59.9",
+    "react-native-doc-viewer": "^2.7.8",
+    "react-native-fs": "2.15.3",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-reanimated": "^1.3.0",
     "react-native-screens": "^1.0.0-alpha.23",
