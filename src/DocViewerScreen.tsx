@@ -30,8 +30,13 @@ class DocViewerScreen extends React.Component<any, any> {
       * return true
       */
       console.log(data.close)
+      console.log(data)
       this.setState({ donebuttonclicked: data.close })
     })
+    console.log(this.eventEmitter)
+    // this.eventEmitter.addListener('',()=>{
+    //
+    // })
   }
 
   componentDidMount() {
@@ -54,46 +59,22 @@ class DocViewerScreen extends React.Component<any, any> {
  * Handle WWW File Method
  * fileType Default == "" you can use it, to set the File Extension (pdf,doc,xls,ppt etc) when in the Url the File Extension is missing.
  */
-  handlePress = () => {
+  docPress = () => {
     this.setState({ animating: true })
-    if (Platform.OS === 'ios') {
-      OpenFile.openDoc([{
-        url: 'https://grewer.github.io/dataSave/office/test.xls',
-        fileNameOptional: 'test filename'
-      }], (error: any, url: any) => {
-        if (error) {
-          this.setState({ animating: false })
-        } else {
-          this.setState({ animating: false })
-          console.log(url)
-        }
-      })
-    } else {
-      //Android
-      this.setState({ animating: true })
-      OpenFile.openDoc([{
-        url: 'https://www.huf-haus.com/fileadmin/Bilder/Header/ART_3/Header_HUF_Haus_ART_3___1_.jpg', // Local "file://" + filepath
-        fileName: 'sample',
-        cache: false,
-        fileType: 'jpg'
-      }], (error: any, url: any) => {
-        if (error) {
-          this.setState({ animating: false })
-          console.error(error)
-        } else {
-          this.setState({ animating: false })
-          console.log(url)
-        }
-      })
-    }
+    OpenFile.openDoc([{
+      url: 'https://grewer.github.io/dataSave/office/test.xls',
+      fileNameOptional: 'test filename'
+    }], (error: any, url: any) => {
+      if (error) {
+        this.setState({ animating: false })
+      } else {
+        this.setState({ animating: false })
+        console.log(url)
+      }
+    })
   }
 
-  /*
-  * Binary in URL
-  * Binary String in Url
-  * fileType Default == "" you can use it, to set the File Extension (pdf,doc,xls,ppt etc) when in the Url you dont have an File Extensions
-  */
-  handlePressBinaryinUrl = () => {
+  xlsPress = () => {
     this.setState({ animating: true })
     if (Platform.OS === 'ios') {
       OpenFile.openDocBinaryinUrl([{
@@ -157,14 +138,13 @@ class DocViewerScreen extends React.Component<any, any> {
           Doc Viewer React Native
         </Text>
         <Button
-          onPress={this.handlePress.bind(this)}
+          onPress={this.docPress}
           title="doc"
           accessibilityLabel="See a Document"
         />
         <Button
-          onPress={this.handlePressBinaryinUrl.bind(this)}
-          title="Press Me Open BinaryinUrl"
-          accessibilityLabel="See a Document"
+          onPress={this.xlsPress}
+          title="xls"
         />
         <Button
           onPress={() => this.handlePressVideo('http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4')}
