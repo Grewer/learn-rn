@@ -4,25 +4,6 @@ import { createStackNavigator, NavigationStackProp } from "react-navigation-stac
 import { createAppContainer } from "react-navigation";
 import Main from "./src/Main";
 
-
-// class HomeScreen extends React.Component<NavigationInjectedProps> {
-//   static navigationOptions = {
-//     title: '主页面',
-//   };
-//
-//   render() {
-//     console.log(this.props)
-//     return (
-//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//         <Text>Home Screen</Text>
-//         <Button
-//           title="Go to Details "
-//           onPress={() => this.props.navigation.navigate('Details', { name: 'zhang' })}
-//         />
-//       </View>
-//     );
-//   }
-// }
 function HomeScreen(props: {
   navigation: NavigationStackProp;
 }) {
@@ -36,6 +17,10 @@ function HomeScreen(props: {
       <Button
         title="to Main "
         onPress={() => props.navigation.navigate('Main', { name: 'zhang' })}
+      />
+      <Button
+        title="to ItemDetails "
+        onPress={() => props.navigation.navigate('ItemDetails', { name: 'zhang' })}
       />
     </View>
   );
