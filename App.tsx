@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Button, Text, View } from "react-native";
-import { createStackNavigator, NavigationStackProp } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 import Main from "./src/Main";
 import DocViewerScreen from './src/DocViewerScreen'
 
 function HomeScreen(props: {
-  navigation: NavigationStackProp;
+  navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
 }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -32,7 +31,7 @@ HomeScreen.navigationOptions = {
 };
 
 
-class DetailsScreen extends React.Component<{ navigation: NavigationStackProp<{ name: string }> }> {
+class DetailsScreen extends React.Component<any> {
   static navigationOptions = {
     title: '详情页面',
     headerRight: () => (

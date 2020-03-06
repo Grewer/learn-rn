@@ -6,7 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "postinstall": "jetifier -r",
-    "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
+    "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios",
+    "run-android": "node node_modules/react-native/local-cli/cli.js run-android"
   },
   "dependencies": {
     "@types/react-native-doc-viewer": "^2.7.1",
@@ -14,11 +15,8 @@
     "react-native": "0.59.9",
     "react-native-doc-viewer": "^2.7.8",
     "react-native-fs": "2.15.3",
-    "react-native-gesture-handler": "^1.4.1",
-    "react-native-reanimated": "^1.3.0",
-    "react-native-screens": "^1.0.0-alpha.23",
-    "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.10.3",
+    "react-native-gesture-handler": "1.3.0",
+    "react-navigation": "3.11.0",
     "typescript": "^3.6.4"
   },
   "devDependencies": {
