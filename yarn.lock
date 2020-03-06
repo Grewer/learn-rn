@@ -5053,6 +5053,11 @@ react-native-doc-viewer@^2.7.8:
   resolved "http://192.168.2.116:4873/react-native-doc-viewer/-/react-native-doc-viewer-2.7.8.tgz#43d065328fb1b7ec90d321e5bd234711e807c8f6"
   integrity sha1-Q9BlMo+xt+yQ0yHlvSNHEegHyPY=
 
+react-native-file-viewer@^2.0.2:
+  version "2.0.2"
+  resolved "http://192.168.2.116:4873/react-native-file-viewer/-/react-native-file-viewer-2.0.2.tgz#55fb73d611d8f5468c887f6dc4e9ff1e69668512"
+  integrity sha1-Vftz1hHY9UaMiH9txOn/HmlmhRI=
+
 react-native-fs@2.15.3:
   version "2.15.3"
   resolved "http://192.168.2.116:4873/react-native-fs/-/react-native-fs-2.15.3.tgz#1a7757759bfba5b08d4087433bf068fb5fe9a699"
