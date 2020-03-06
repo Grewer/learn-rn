@@ -63,7 +63,8 @@ class DocViewerScreen extends React.Component<any, any> {
     this.setState({ animating: true })
     OpenFile.openDoc([{
       url: 'https://grewer.github.io/dataSave/office/test.xls',
-      fileNameOptional: 'test filename'
+      fileNameOptional: 'test filename',
+      cache: true
     }], (error: any, url: any) => {
       if (error) {
         this.setState({ animating: false })
@@ -91,10 +92,12 @@ class DocViewerScreen extends React.Component<any, any> {
         }
       })
     } else {
-      OpenFile.openDocBinaryinUrl([{
-        url: 'https://storage.googleapis.com/need-sure/example',
-        fileName: 'sample',
-        fileType: 'xml',
+      console.log('run android')
+      OpenFile.openDoc([{
+        url: 'https://grewer.github.io/dataSave/office/test.xls',
+        fileName: 'test',
+        fileType: 'xls',
+        cache: true
       }], (error: any, url: any) => {
         if (error) {
           console.error(error)
