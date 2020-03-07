@@ -5,6 +5,7 @@ import Main from "./src/Main";
 import DocViewerScreen from './src/DocViewerScreen'
 import FileViewerScreen from './src/FileViewerScreen'
 import WebViewTest from './src/WebViewTest'
+import WPSOfficeScreen from './src/WPSOfficeScreen'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -31,6 +32,10 @@ function HomeScreen(props: {
       <Button
         title="to WebViewTest "
         onPress={() => props.navigation.navigate('WebViewTest')}
+      />
+      <Button
+        title="to WPSOfficeScreen "
+        onPress={() => props.navigation.navigate('WPSOfficeScreen')}
       />
     </View>
   );
@@ -90,7 +95,8 @@ const RootStack = createStackNavigator(
     Main: Main,
     DocViewerScreen,
     FileViewerScreen,
-    WebViewTest
+    WebViewTest,
+    WPSOfficeScreen
   },
   {
     initialRouteName: 'Home',
