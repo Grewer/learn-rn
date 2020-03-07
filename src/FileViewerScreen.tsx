@@ -7,10 +7,10 @@ class FileViewerScreen extends React.Component {
   constructor({ props }: { props: any }) {
     super(props)
 
-    const url = 'https://grewer.github.io/dataSave/office/test.pdf'
+    const url = 'https://grewer.github.io/dataSave/office/test.doc'
 
 
-    const localFile = `${RNFS.DocumentDirectoryPath}/test.pdf`
+    const localFile = `${RNFS.DocumentDirectoryPath}/test.doc`
 
     const options = {
       fromUrl: url,
