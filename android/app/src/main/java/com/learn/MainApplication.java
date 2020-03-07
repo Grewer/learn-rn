@@ -3,6 +3,8 @@ package com.learn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.ReactSextant.wps.WPSOfficePackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.rnfs.RNFSPackage;
@@ -27,6 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new WPSOfficePackage(),
+            new RNCWebViewPackage(),
             new RNFileViewerPackage(),
             new RNGestureHandlerPackage(),
             new RNFSPackage(),

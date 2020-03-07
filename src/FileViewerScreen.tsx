@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import RNFS from 'react-native-fs'
+import RNFS, { DownloadBeginCallbackResult, DownloadProgressCallbackResult } from 'react-native-fs'
 import FileViewer from 'react-native-file-viewer'
 
 class FileViewerScreen extends React.Component {
@@ -14,10 +14,23 @@ class FileViewerScreen extends React.Component {
 
     const options = {
       fromUrl: url,
-      toFile: localFile
+      toFile: localFile,
+      begin: (res: DownloadBeginCallbackResult) => {
+        console.log(res)
+      },
+      progress: (res: DownloadProgressCallbackResult) => {
+        console.log('progress', res)
+      }
     }
+
+    console.log('start download file', localFile)
     RNFS.downloadFile(options).promise
-      .then(() => FileViewer.open(localFile, { showOpenWithDialog: true }))
+      .then(() => {
+        console.log('download file success')
+        return FileViewer.open(localFile, { showOpenWithDialog: true })
+      }).catch(err => {
+        console.log('download err', err)
+      })
       .then(() => {
         // success
         console.log('success')
