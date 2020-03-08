@@ -5,7 +5,7 @@
  */
 
 import React, {Component} from 'react';
-import {DeviceInfo, Image, PanResponder, Text, TouchableOpacity, View} from 'react-native';
+import {DeviceInfo, Image, PanResponder, Text, TouchableOpacity, View,StatusBar} from 'react-native';
 import Util from "../utils/util";
 import Video from 'react-native-video';
 import Progress from '../components/mukeVideo/progress';
@@ -413,12 +413,6 @@ export default class MukeVideo extends Component {
             height: videoData.videoHeight,
             rate: videoData.videoWidth / videoData.videoHeight
         }
-        //屏幕分辨率
-        this.screen = {
-            width: Util.getWidth(),
-            height: Util.getHeight(),
-            rate: Util.getWidth() / Util.getHeight() //宽高比
-        }
 
         let width = Util.getWidth();
         let height = Util.getHeight();
@@ -456,7 +450,8 @@ export default class MukeVideo extends Component {
                 this.statusHeight = 30;
                 this.videoScreen.width = this.videoScreen.width - 60;
             } else {
-                this.statusHeight = 0
+                // 安卓需要此 ?
+                this.videoScreen.height = this.videoScreen.height - StatusBar.currentHeight;
             }
         }
 
