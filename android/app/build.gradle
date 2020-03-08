@@ -138,7 +138,7 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-orientation-locker')
+    implementation project(':react-native-reanimated')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-orientation')
     implementation project(':react-native-video')
