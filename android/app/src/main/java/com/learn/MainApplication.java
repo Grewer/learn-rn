@@ -3,8 +3,8 @@ package com.learn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.wonday.orientation.OrientationPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.github.ReactSextant.wps.WPSOfficePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -32,8 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new LinearGradientPackage(),
             new OrientationPackage(),
+            new LinearGradientPackage(),
             new ReactVideoPackage(),
             new WPSOfficePackage(),
             new RNCWebViewPackage(),

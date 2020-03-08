@@ -9,7 +9,7 @@ import {DeviceInfo, Image, PanResponder, Text, TouchableOpacity, View} from 'rea
 import Util from "../utils/util";
 import Video from 'react-native-video';
 import Progress from '../components/mukeVideo/progress';
-import Orientation from 'react-native-orientation'
+import Orientation from 'react-native-orientation-locker'
 
 export default class MukeVideo extends Component {
     constructor(props) {
@@ -75,11 +75,14 @@ export default class MukeVideo extends Component {
 
     //监听屏幕的改变，重新计算视频的布局并重新渲染
     updateOrientation = (orientation) => {
-        console.log('屏幕变化')
-        // todo 安卓为生效
-        this.calculateParams(orientation == "PORTRAIT");
+        console.log('屏幕变化', orientation)
+        // Platform.select({
+        //
+        // }) //LANDSCAPE-RIGHT
+        const isPortrait = orientation === "PORTRAIT"
+        this.calculateParams(isPortrait);
         this.setState({
-            isPortrait: orientation == "PORTRAIT"
+            isPortrait
         })
     }
 
@@ -416,10 +419,19 @@ export default class MukeVideo extends Component {
             height: Util.getHeight(),
             rate: Util.getWidth() / Util.getHeight() //宽高比
         }
+
+        let width = Util.getWidth();
+        let height = Util.getHeight();
+
+        if (this.state.isPortrait !== isPortrait) {
+            width = Util.getHeight();
+            height = Util.getWidth();
+        }
+
         //初始化视频可用分辨率
         this.videoScreen = {
-            width: Util.getWidth(),
-            height: Util.getHeight(),
+            width,
+            height,
             paddingTop: 0,//用于竖屏
             paddingLeft: 0//用于横屏
             // rate:Util.getWidth()/Util.getHeight() //宽高比
@@ -457,6 +469,7 @@ export default class MukeVideo extends Component {
             this.videoScreen.paddingLeft = this.statusHeight;
         }
 
+
         //可用屏幕宽高比
         this.videoScreen.rate = this.videoScreen.width / this.videoScreen.height
 
@@ -466,6 +479,7 @@ export default class MukeVideo extends Component {
                 this.videoScreen.height = this.videoScreen.width / this.videoRatio.rate;
             }
         }
+
     }
     //设置视频的播放进度
     changeProgress = (rate) => {
