@@ -47,6 +47,9 @@
 		413D86850A654C1B944B395B /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD51E1CAF7542528B23A772 /* libRNGestureHandler-tvOS.a */; };
 		8D107F8EAD1D4F948951C7AE /* libRNFileViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2AF1F6B25254734BEC87F46 /* libRNFileViewer.a */; };
 		AED45D05EFC946B5838D092F /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064C1D542912464F8A941D3F /* libRNCWebView.a */; };
+		D6E8EBE4BFCB475FB75D3040 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC996E514EBB4240AE1F469D /* libRCTVideo.a */; };
+		796E8CBD77154A35B823084C /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3FF8D6DB5004392B7F40CE4 /* libRCTOrientation.a */; };
+		DEF62F2ADB9F466580A2BB2D /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2FB26BDD8D452099B8D366 /* libBVLinearGradient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -368,6 +371,12 @@
 		F2AF1F6B25254734BEC87F46 /* libRNFileViewer.a */ = {isa = PBXFileReference; name = "libRNFileViewer.a"; path = "libRNFileViewer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		A651995BA426463BB6409697 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; name = "RNCWebView.xcodeproj"; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		064C1D542912464F8A941D3F /* libRNCWebView.a */ = {isa = PBXFileReference; name = "libRNCWebView.a"; path = "libRNCWebView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F4C5F27D06AE4DC187160EE5 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; name = "RCTVideo.xcodeproj"; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		FC996E514EBB4240AE1F469D /* libRCTVideo.a */ = {isa = PBXFileReference; name = "libRCTVideo.a"; path = "libRCTVideo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		785AABE5777B4DC3B521E719 /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; name = "RCTOrientation.xcodeproj"; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C3FF8D6DB5004392B7F40CE4 /* libRCTOrientation.a */ = {isa = PBXFileReference; name = "libRCTOrientation.a"; path = "libRCTOrientation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3809C1E1506B4F79B7215C47 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2F2FB26BDD8D452099B8D366 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +411,9 @@
 				1C8D83A8D58E443386CD0D60 /* libRNGestureHandler.a in Frameworks */,
 				8D107F8EAD1D4F948951C7AE /* libRNFileViewer.a in Frameworks */,
 				AED45D05EFC946B5838D092F /* libRNCWebView.a in Frameworks */,
+				D6E8EBE4BFCB475FB75D3040 /* libRCTVideo.a in Frameworks */,
+				796E8CBD77154A35B823084C /* libRCTOrientation.a in Frameworks */,
+				DEF62F2ADB9F466580A2BB2D /* libBVLinearGradient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +613,9 @@
 				B19045200B6047EF85695B5B /* RNGestureHandler.xcodeproj */,
 				4A5590FC5AED4DFB88940789 /* RNFileViewer.xcodeproj */,
 				A651995BA426463BB6409697 /* RNCWebView.xcodeproj */,
+				F4C5F27D06AE4DC187160EE5 /* RCTVideo.xcodeproj */,
+				785AABE5777B4DC3B521E719 /* RCTOrientation.xcodeproj */,
+				3809C1E1506B4F79B7215C47 /* BVLinearGradient.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1232,6 +1247,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1241,6 +1259,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Debug;
@@ -1266,6 +1287,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1275,6 +1299,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Release;
@@ -1303,6 +1330,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Debug;
@@ -1330,6 +1360,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Release;
@@ -1363,6 +1396,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1372,6 +1408,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Debug;
@@ -1405,6 +1444,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1414,6 +1456,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Release;
@@ -1446,6 +1491,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1455,6 +1503,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Debug;
@@ -1487,6 +1538,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1496,6 +1550,9 @@
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-file-viewer/ios",
 					"$(SRCROOT)/../node_modules/react-native-webview/ios",
+					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 				);
 			};
 			name = Release;
