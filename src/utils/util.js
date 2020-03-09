@@ -1,11 +1,5 @@
-import Dimensions from 'Dimensions';
-import React, {Component} from 'react';
-import {
-    PixelRatio,
-    Platform,
-    DeviceInfo,
-    DeviceEventEmitter,
-} from 'react-native';
+import React from 'react';
+import {DeviceInfo, Platform, Dimensions} from 'react-native';
 
 export default class Util {
     //屏幕尺寸
@@ -13,6 +7,7 @@ export default class Util {
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
     }
+
     //获取百分比的屏幕高度
     static getPercentHeight(percent) {
         return Dimensions.get('window').height * percent / 100;
@@ -21,6 +16,7 @@ export default class Util {
     static getPercentWidth(percent) {
         return Dimensions.get('window').width * percent / 100;
     }
+
     static setSize() {
         this.size = {
             width: Dimensions.get('window').width,

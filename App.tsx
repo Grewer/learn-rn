@@ -1,12 +1,21 @@
 import * as React from 'react'
-import { Animated, Button, Easing, Text, View } from 'react-native'
+import {
+  Animated,
+  Button,
+  Easing,
+  Text,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import Main from './src/Main'
 import DocViewerScreen from './src/DocViewerScreen'
 import FileViewerScreen from './src/FileViewerScreen'
 import WebViewTest from './src/WebViewTest'
 import WPSOfficeScreen from './src/WPSOfficeScreen'
-import MukeVideo from './src/pages/mukeVideo'
+import videoView from './src/pages/videoView'
 import Hot from './src/pages/hot'
 
 function HomeScreen(props: {
@@ -18,6 +27,16 @@ function HomeScreen(props: {
       <Button
         title="to video "
         onPress={() => props.navigation.navigate('Hot')}
+      />
+
+      <TouchableOpacity
+        onLongPress={() => console.log("onLongPress")}
+      >
+        <Text>长按测试</Text>
+      </TouchableOpacity>
+      <Button
+        title="to WebViewTest "
+        onPress={() => props.navigation.navigate('WebViewTest')}
       />
     </View>
   )
@@ -86,15 +105,15 @@ const RootStack = createStackNavigator(
     WebViewTest,
     WPSOfficeScreen,
     Hot,
-    MukeVideo: {
-      screen: MukeVideo,
+    videoView: {
+      screen: videoView,
       navigationOptions: {
         header: null
       }
     },
   },
   {
-    ...stackNavigatorConfig,
+    // ...stackNavigatorConfig,
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {

@@ -915,6 +915,11 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
+"@types/node@^13.9.0":
+  version "13.9.0"
+  resolved "http://192.168.2.116:4873/@types%2fnode/-/node-13.9.0.tgz#5b6ee7a77faacddd7de719017d0bc12f52f81589"
+  integrity sha1-W27np3+qzd195xkBfQvBL1L4FYk=
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.3.tgz?cache=0&sync_timestamp=1569356144273&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fprop-types%2Fdownload%2F%40types%2Fprop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -926,6 +931,21 @@
   integrity sha1-li3zw+HAv0m9T4VOJ6Cqd3X8rtQ=
   dependencies:
     react-native-fs "^2.13.0"
+
+"@types/react-native-video@^5.0.0":
+  version "5.0.0"
+  resolved "http://192.168.2.116:4873/@types%2freact-native-video/-/react-native-video-5.0.0.tgz#464cef936e53563d78dccbbc2ce6deded0b7f552"
+  integrity sha1-Rkzvk25TVj143Mu8LObe3tC39VI=
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
+"@types/react-native@*":
+  version "0.61.20"
+  resolved "http://192.168.2.116:4873/@types%2freact-native/-/react-native-0.61.20.tgz#937d8ed9768bdfc982e785563c07b4905ba0fd1f"
+  integrity sha1-k32O2XaL38mC54VWPAe0kFug/R8=
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-native@^0.60.21":
   version "0.60.21"

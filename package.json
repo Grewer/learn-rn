@@ -28,8 +28,10 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/runtime": "^7.6.3",
+    "@types/node": "^13.9.0",
     "@types/react": "16.8.3",
     "@types/react-native": "^0.60.21",
+    "@types/react-native-video": "^5.0.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "jetifier": "^1.6.4",
