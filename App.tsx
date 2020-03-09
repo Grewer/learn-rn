@@ -1,14 +1,5 @@
 import * as React from 'react'
-import {
-  Animated,
-  Button,
-  Easing,
-  Text,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { Animated, Button, Easing, Text, TouchableOpacity, View } from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import Main from './src/Main'
 import DocViewerScreen from './src/DocViewerScreen'
@@ -30,7 +21,7 @@ function HomeScreen(props: {
       />
 
       <TouchableOpacity
-        onLongPress={() => console.log("onLongPress")}
+        onLongPress={() => console.log('onLongPress')}
       >
         <Text>长按测试</Text>
       </TouchableOpacity>

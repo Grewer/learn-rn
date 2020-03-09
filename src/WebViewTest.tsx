@@ -14,6 +14,7 @@ var DEFAULT_URL = 'https://view.officeapps.live.com/op/view.aspx?src=https://gre
 
 // 安卓
 // 不支持: xls doc pdf ppt
+// 需要加 https://view.officeapps.live.com/op/view.aspx?src=
 
 class WebViewTest extends React.Component {
   componentDidMount(): void {

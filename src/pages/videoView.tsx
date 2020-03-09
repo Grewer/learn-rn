@@ -8,11 +8,9 @@ import React, { Component } from 'react'
 import { Image, PanResponder, PanResponderInstance, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import Util from '../utils/util'
 import Video from 'react-native-video'
-import Progress from '../components/mukeVideo/progress'
+import Progress from '../components/progress'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
-import DeviceInfo from 'react-native/Libraries/Utilities/DeviceInfo'
 
-console.log('DeviceInfo', DeviceInfo)
 export default class VideoView extends Component<any, any> {
   private timeOut: NodeJS.Timeout
   private panResponder: PanResponderInstance
@@ -407,15 +405,20 @@ export default class VideoView extends Component<any, any> {
       rate: videoData.videoWidth / videoData.videoHeight
     }
 
+    if (Util.isPlatform('ios')) {
+      Util.getSize()
+    }
+
     let width = Util.getWidth()
     let height = Util.getHeight()
 
-    console.log(width, height)
 
     if (Util.isPlatform('android') && this.state.isPortrait !== isPortrait) {
       width = Util.getHeight()
       height = Util.getWidth()
     }
+
+    console.log(width, height, this.state.isPortrait, isPortrait)
 
     //初始化视频可用分辨率
     this.videoScreen = {
@@ -429,8 +432,8 @@ export default class VideoView extends Component<any, any> {
     this.statusHeight = 0
     //竖屏
     if (isPortrait) {
-      if (DeviceInfo.isIPhoneX_deprecated) {
-        this.statusHeight = 32
+      if (Util.isIPhoneX()) {
+        this.statusHeight = 40
         this.videoScreen.height = this.videoScreen.height - 64
       } else {
         this.statusHeight = 20
@@ -440,20 +443,17 @@ export default class VideoView extends Component<any, any> {
       if (Util.isPlatform('android')) {
         this.statusHeight = 0
       }
+      // 竖屏设置top
+      this.videoScreen.paddingTop = this.statusHeight
+      this.videoScreen.paddingLeft = 0
     } else {//横屏
-      if (DeviceInfo.isIPhoneX_deprecated) {
-        this.statusHeight = 30
+      if (Util.isIPhoneX()) {
+        this.statusHeight = 42
         this.videoScreen.width = this.videoScreen.width - 64
       } else {
         this.videoScreen.height = this.videoScreen.height - StatusBar.currentHeight
       }
-    }
-
-    //竖屏设置top 横屏设置left
-    if (isPortrait) {
-      this.videoScreen.paddingTop = this.statusHeight
-      this.videoScreen.paddingLeft = 0
-    } else {
+      // 横屏设置left
       this.videoScreen.paddingTop = 0
       this.videoScreen.paddingLeft = Number(this.statusHeight)
     }

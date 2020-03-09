@@ -9,7 +9,7 @@ import {
     View,PanResponder,
     NativeModules
 } from 'react-native';
-import Util from '../../utils/util';
+import Util from '../utils/util';
 
 export default class Progress extends Component {
 
