@@ -417,7 +417,9 @@ export default class MukeVideo extends Component {
         let width = Util.getWidth();
         let height = Util.getHeight();
 
-        if (this.state.isPortrait !== isPortrait) {
+        console.log(width,height)
+
+        if (Util.isPlatform("android") && this.state.isPortrait !== isPortrait) {
             width = Util.getHeight();
             height = Util.getWidth();
         }
