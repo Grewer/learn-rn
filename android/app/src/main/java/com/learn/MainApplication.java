@@ -3,7 +3,7 @@ package com.learn;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.swmansion.reanimated.ReanimatedPackage;
+import org.wonday.orientation.OrientationPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.github.ReactSextant.wps.WPSOfficePackage;
@@ -32,7 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReanimatedPackage(),
+            new OrientationPackage(),
             new LinearGradientPackage(),
             new ReactVideoPackage(),
             new WPSOfficePackage(),

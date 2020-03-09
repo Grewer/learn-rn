@@ -5,13 +5,11 @@
  */
 
 import React, {Component} from 'react';
-import {DeviceInfo, Image, PanResponder, Text, TouchableOpacity, View} from 'react-native';
+import {DeviceInfo, Image, PanResponder, Text, TouchableOpacity, View,StatusBar} from 'react-native';
 import Util from "../utils/util";
 import Video from 'react-native-video';
 import Progress from '../components/mukeVideo/progress';
-import Orientation from 'react-native-orientation'
-
-// react-native-orientation-locker 在 IOS 旋转失效
+import Orientation from 'react-native-orientation-locker'
 
 export default class MukeVideo extends Component {
     constructor(props) {
@@ -117,7 +115,6 @@ export default class MukeVideo extends Component {
         const addr1 = require("../assets/1.mp4");
         let addr = videoData.videoUrl.indexOf("4.") != -1 ? addr4 : addr1;
         // let addr = {uri: 'https://grewer.github.io/dataSave/test.mp4'}
-        console.log('render', this.state.isPortrait, this.videoScreen)
         return (
             <View style={{
                 paddingTop: videoScreen.paddingTop,
@@ -420,10 +417,11 @@ export default class MukeVideo extends Component {
         let width = Util.getWidth();
         let height = Util.getHeight();
 
-        // if (this.state.isPortrait !== isPortrait) {
-        //     width = Util.getHeight();
-        //     height = Util.getWidth();
-        // }
+        if (this.state.isPortrait !== isPortrait) {
+            width = Util.getHeight();
+            height = Util.getWidth();
+        }
+
         //初始化视频可用分辨率
         this.videoScreen = {
             width,
@@ -454,7 +452,6 @@ export default class MukeVideo extends Component {
             } else {
                 // 安卓需要此 ?
                 this.videoScreen.height = this.videoScreen.height - StatusBar.currentHeight;
-                this.statusHeight = 0
             }
         }
 
@@ -467,6 +464,7 @@ export default class MukeVideo extends Component {
             this.videoScreen.paddingLeft = this.statusHeight;
         }
 
+
         //可用屏幕宽高比
         this.videoScreen.rate = this.videoScreen.width / this.videoScreen.height
 
@@ -477,7 +475,6 @@ export default class MukeVideo extends Component {
             }
         }
 
-        console.log(this.videoScreen)
     }
     //设置视频的播放进度
     changeProgress = (rate) => {
