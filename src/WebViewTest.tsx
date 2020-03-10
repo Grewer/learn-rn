@@ -4,8 +4,8 @@ import { WebView } from 'react-native-webview'
 
 
 // var DEFAULT_URL = 'https://www.baidu.com'
-// var DEFAULT_URL = 'https://grewer.github.io/dataSave/office/test.xls'
-var DEFAULT_URL = 'https://view.officeapps.live.com/op/view.aspx?src=https://grewer.github.io/dataSave/office/test.xls'
+var DEFAULT_URL = 'https://grewer.github.io/dataSave/office/test.xls'
+// var DEFAULT_URL = 'https://view.officeapps.live.com/op/view.aspx?src=https://grewer.github.io/dataSave/office/test.xls'
 // var DEFAULT_URL = 'https://ow365.cn/?i=20844&ssl=1&furl=https://grewer.github.io/dataSave/office/test.xls'
 
 
@@ -17,8 +17,6 @@ var DEFAULT_URL = 'https://view.officeapps.live.com/op/view.aspx?src=https://gre
 // 需要加 https://view.officeapps.live.com/op/view.aspx?src=
 
 class WebViewTest extends React.Component {
-  componentDidMount(): void {
-  }
 
   state = {
     loadingProgress: 0

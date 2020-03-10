@@ -40,6 +40,7 @@ export default class Progress extends Component<IProps, {}> {
       pageX: 0,
       width: 0,
     }
+    console.log(this.props)
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => {
         return true
@@ -98,29 +99,29 @@ export default class Progress extends Component<IProps, {}> {
     this.isMove = false
   }
 
-  onLayout = (event: LayoutChangeEvent) => {
-    {
-      // let {x, y, width, height} = event.nativeEvent.layout;
-      //拿到这个view的x位置和宽度
-      NativeModules.UIManager.measure(event.target, (x, y, width, height, pageX, pageY) => {
-        //安卓手机获取的值与ios不一样，特殊处理
-        if (Util.isPlatform('android')) {
-          x = pageX - Util.getWidth()
-        }
-        this.progressLocation = {
-          name: 'progressLocation',
-          pageX: x,
-          width: width,
-        }
-      })
-    }
-  }
 
   render() {
     // Slider
     return (
-      <View onLayout={this.onLayout}
-            style={this.props.style}>
+      <View style={this.props.style} onLayout={(event: LayoutChangeEvent) => {
+
+        // let {x, y, width, height} = event.nativeEvent.layout;
+        //拿到这个view的x位置和宽度
+        {
+          NativeModules.UIManager.measure(event.currentTarget, (x, y, width, height, pageX, pageY) => {
+            //安卓手机获取的值与ios不一样，特殊处理
+            console.log(event, x, y, width, height)
+            if (Util.isPlatform('android')) {
+              x = pageX - Util.getWidth()
+            }
+            this.progressLocation = {
+              name: 'progressLocation',
+              pageX: x,
+              width: width,
+            }
+          })
+        }
+      }}>
         <View style={styles.maxProgress}>
           <View style={[styles.currentProgress, {
             width: this.isMove ? ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width * 100 + '%') : this.props.pLengh,

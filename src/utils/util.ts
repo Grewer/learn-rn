@@ -3,16 +3,14 @@ import { Dimensions, Platform } from 'react-native'
 
 export default class Util {
   //屏幕尺寸
-  static size = {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
-  }
+  static size = Dimensions.get('window')
 
   static getSize = () => {
-    Util.size = {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height
-    }
+    Util.size = Dimensions.get('window')
+  }
+
+  static getDynamicWidth = () => {
+    return Dimensions.get('window').width
   }
 
   //获取屏幕宽度
@@ -32,15 +30,13 @@ export default class Util {
 
   //判断是否是IPhoneX
   static isIPhoneX() {
-    const size = {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height
-    }
+    const size = Dimensions.get('window')
 
     return (
       Platform.OS === 'ios' &&
       (size.height === 812 || size.width === 812 || size.height === 896 || size.width === 896)
     )
+
   }
 
   //把传入的秒数格式化成 时分秒（00：00：00），

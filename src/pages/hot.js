@@ -59,6 +59,7 @@ export default class Hot extends Component {
 
 
                         return (
+
                             <TouchableOpacity onPress={() => {
                                 this.props.navigation.navigate('videoView', {videoData: VideoData[picNum]})
                             }}
