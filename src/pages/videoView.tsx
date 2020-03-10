@@ -293,7 +293,7 @@ export default class VideoView extends Component<any, any> {
             </View>
             {/*control*/}
             <View style={{
-              width: this.videoScreen.width,
+              width: this.videoScreen.width - 4,
               height: 60,
               position: 'absolute',
               bottom: (this.state.controlShow) ? 0 : -1000,
@@ -306,18 +306,6 @@ export default class VideoView extends Component<any, any> {
                 height: '50%',
                 backgroundColor: 'rgba(0,0,0,0)'
               }}>
-                {/*<View style={{*/}
-                {/*  justifyContent: 'center',*/}
-                {/*  alignItems: 'center',*/}
-                {/*  width: 50,*/}
-                {/*  height: '100%',*/}
-                {/*  backgroundColor: 'rgba(0,0,0,0)'*/}
-                {/*}}>*/}
-                {/*  <Text style={{*/}
-                {/*    color: '#fff',*/}
-                {/*    fontSize: 12*/}
-                {/*  }}>{Util.formSecondTotHMS(this.state.currentTime)}</Text>*/}
-                {/*</View>*/}
 
                 <Progress changeCurrentTime={this.changeCurrentTime}
                           changeProgress={this.changeProgress}
@@ -330,18 +318,7 @@ export default class VideoView extends Component<any, any> {
                             backgroundColor: 'rgba(0,0,0,0)'
                           }}/>
 
-                {/*<View style={{*/}
-                {/*  justifyContent: 'center',*/}
-                {/*  alignItems: 'center',*/}
-                {/*  width: 50,*/}
-                {/*  height: '100%',*/}
-                {/*  backgroundColor: 'rgba(0,0,0,0)'*/}
-                {/*}}>*/}
-                {/*  <Text style={{*/}
-                {/*    color: '#fff',*/}
-                {/*    fontSize: 12*/}
-                {/*  }}>{Util.formSecondTotHMS(this.state.duration)}</Text>*/}
-                {/*</View>*/}
+
               </View>
 
               <View style={{
@@ -378,7 +355,16 @@ export default class VideoView extends Component<any, any> {
                            source={this.state.paused ? require('../images/play.png') : require('../images/pause.png')}/>
                   </TouchableOpacity>
 
+                  <Text style={{
+                    color: '#fff',
+                    fontSize: 12
+                  }}>{Util.formSecondTotHMS(this.state.currentTime)}</Text>
+                  <Text style={{
+                    color: '#fff',
+                    fontSize: 12
+                  }}>{` / ${Util.formSecondTotHMS(this.state.duration)}`}</Text>
                 </View>
+
                 <View style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
