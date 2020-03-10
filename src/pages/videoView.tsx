@@ -177,7 +177,7 @@ export default class VideoView extends Component<any, any> {
     const addr1 = require('../assets/1.mp4')
     let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
-    addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
+    // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
@@ -293,7 +293,7 @@ export default class VideoView extends Component<any, any> {
             </View>
             {/*control*/}
             <View style={{
-              width: '100%',
+              width: this.videoScreen.width,
               height: 60,
               position: 'absolute',
               bottom: (this.state.controlShow) ? 0 : -1000,
@@ -302,46 +302,46 @@ export default class VideoView extends Component<any, any> {
             }}>
               <View style={{
                 flexDirection: 'row',
-                width: Util.getDynamicWidth(),
+                width: '100%',
                 height: '50%',
                 backgroundColor: 'rgba(0,0,0,0)'
               }}>
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 50,
-                  height: '100%',
-                  backgroundColor: 'rgba(0,0,0,0)'
-                }}>
-                  <Text style={{
-                    color: '#fff',
-                    fontSize: 12
-                  }}>{Util.formSecondTotHMS(this.state.currentTime)}</Text>
-                </View>
+                {/*<View style={{*/}
+                {/*  justifyContent: 'center',*/}
+                {/*  alignItems: 'center',*/}
+                {/*  width: 50,*/}
+                {/*  height: '100%',*/}
+                {/*  backgroundColor: 'rgba(0,0,0,0)'*/}
+                {/*}}>*/}
+                {/*  <Text style={{*/}
+                {/*    color: '#fff',*/}
+                {/*    fontSize: 12*/}
+                {/*  }}>{Util.formSecondTotHMS(this.state.currentTime)}</Text>*/}
+                {/*</View>*/}
 
                 <Progress changeCurrentTime={this.changeCurrentTime}
                           changeProgress={this.changeProgress}
                           pLengh={this.getCurrentTimePercentage()}
                           style={{
-                            width: this.videoScreen.width - 100,
                             justifyContent: 'center',
                             alignItems: 'center',
                             flex: 1,
+                            width: '100%',
                             backgroundColor: 'rgba(0,0,0,0)'
                           }}/>
 
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 50,
-                  height: '100%',
-                  backgroundColor: 'rgba(0,0,0,0)'
-                }}>
-                  <Text style={{
-                    color: '#fff',
-                    fontSize: 12
-                  }}>{Util.formSecondTotHMS(this.state.duration)}</Text>
-                </View>
+                {/*<View style={{*/}
+                {/*  justifyContent: 'center',*/}
+                {/*  alignItems: 'center',*/}
+                {/*  width: 50,*/}
+                {/*  height: '100%',*/}
+                {/*  backgroundColor: 'rgba(0,0,0,0)'*/}
+                {/*}}>*/}
+                {/*  <Text style={{*/}
+                {/*    color: '#fff',*/}
+                {/*    fontSize: 12*/}
+                {/*  }}>{Util.formSecondTotHMS(this.state.duration)}</Text>*/}
+                {/*</View>*/}
               </View>
 
               <View style={{
