@@ -7,7 +7,8 @@
     "test": "jest",
     "postinstall": "jetifier -r",
     "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios",
-    "run-android": "node node_modules/react-native/local-cli/cli.js run-android"
+    "run-android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "checkDep": "cd android && ./gradlew  :app:dependencies"
   },
   "dependencies": {
     "@types/react-native-doc-viewer": "^2.7.1",

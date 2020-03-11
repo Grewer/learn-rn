@@ -206,9 +206,13 @@ export default class VideoView extends Component<any, IState> {
     const addr4 = require('../assets/4.mp4')
     const addr1 = require('../assets/1.mp4')
     let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
+    // addr = require('../assets/index.m3u8')
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
     // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
-    addr = { uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8' }
+    addr = {
+      uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
+      type: 'm3u8'
+    }
     console.log('render video views')
     return (
       <View style={{
@@ -220,7 +224,7 @@ export default class VideoView extends Component<any, IState> {
         backgroundColor: '#ccc',
         position: 'relative'
       }}>
-        <View style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
+        <View style={{ width: videoScreen.width, height: videoScreen.height }}>
           {/*关于 iOS 加载 HTTP https://www.npmjs.com/package/react-native-video#ios-app-transport-security*/}
           <Video ref={(ref) => {
             this.video = ref
@@ -235,13 +239,14 @@ export default class VideoView extends Component<any, IState> {
                  muted={this.state.muted}
                  resizeMode={this.state.resizeMode as any}
                  repeat={false}
+                 controls={true}
                  onLoad={this.onLoad}
                  onProgress={this.onProgress}
                  onEnd={this.onEnd}
                  onError={(err) => {
                    console.log('onError', err)
                  }}
-                 useTextureView={false} // android 某种设置 test
+                 // useTextureView={false} // android 某种设置 test
           />
           {loading && <View style={[styles.loading, styles.horizontal]}>
               <ActivityIndicator/>

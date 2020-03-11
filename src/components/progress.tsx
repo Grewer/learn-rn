@@ -26,7 +26,7 @@ interface IProps {
   changeMoveTime: (rate: number) => void
 }
 
-
+// 性能过差  使用 slide 代替
 export default class Progress extends Component<IProps, {}> {
   private pageX: number
   private isMove: boolean
@@ -77,7 +77,7 @@ export default class Progress extends Component<IProps, {}> {
   }
 
   //触摸点移动时回调
-  onMove = Util.throttle((e: GestureResponderEvent) => {
+  onMove = (e: GestureResponderEvent) => {
     console.log(e.nativeEvent)
     //获取手指相对屏幕 x的坐标，并设计拖动按钮的位置，拖动按钮不能超出进度条的位置
     this.pageX = e.nativeEvent.pageX
@@ -92,7 +92,7 @@ export default class Progress extends Component<IProps, {}> {
     this.forceUpdate()
     //通过百分比计算视频的播放时间
     this.changeMoveTime()
-  }, 16)
+  }
 
   changeMoveTime = () => {
     this.props.changeMoveTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
@@ -109,7 +109,7 @@ export default class Progress extends Component<IProps, {}> {
 
 
   render() {
-    console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width))
+    console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width),this.progressLocation)
     // Slider
     return (
       <View style={this.props.style} onLayout={(event: LayoutChangeEvent) => {
@@ -121,7 +121,7 @@ export default class Progress extends Component<IProps, {}> {
           //安卓手机获取的值与ios不一样，特殊处理
           console.log(event, x, y, width, height)
           if (Util.isPlatform('android')) {
-            x = pageX - Util.getWidth()
+            // x = pageX - Util.getDynamicWidth()
           }
           this.progressLocation = {
             name: 'progressLocation',
