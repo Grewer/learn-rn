@@ -60,5 +60,18 @@ export default class Util {
       return zero(hh) + ':' + zero(mm) + ':' + zero(ss)
     }
   }
+
+  static throttle = (func: Function, delay: number) => {
+    let prev = Date.now()
+    return function (evt: any) {
+      const context = this
+      const now = Date.now()
+      if (now - prev >= delay) {
+        func.call(context, evt)
+        prev = Date.now()
+      }
+    }
+  }
+
 }
 

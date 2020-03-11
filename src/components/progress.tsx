@@ -27,17 +27,6 @@ interface IProps {
 }
 
 
-function throttle(func: Function, delay: number) {
-  let prev = Date.now()
-  return function (evt: any) {
-    const context = this
-    const now = Date.now()
-    if (now - prev >= delay) {
-      func.call(context, evt)
-      prev = Date.now()
-    }
-  }
-}
 
 export default class Progress extends Component<IProps, {}> {
   private pageX: number
@@ -84,28 +73,30 @@ export default class Progress extends Component<IProps, {}> {
   onStart = (e: GestureResponderEvent) => {
     //获取 按钮的 x的位置
     this.pageX = e.nativeEvent.pageX
+    console.log('on start', this.pageX)
     this.isMove = true
   }
 
   //触摸点移动时回调
-  onMove = throttle((e: GestureResponderEvent) => {
-    // console.log(e)
+  onMove = Util.throttle((e: GestureResponderEvent) => {
+    console.log(e.nativeEvent)
     //获取手指相对屏幕 x的坐标，并设计拖动按钮的位置，拖动按钮不能超出进度条的位置
     this.pageX = e.nativeEvent.pageX
-
+    console.log(this.pageX)
     if (e.nativeEvent.pageX < this.progressLocation.pageX) {
       this.pageX = this.progressLocation.pageX
     } else if (e.nativeEvent.pageX > (this.progressLocation.pageX + this.progressLocation.width - 10)) {
       //-10的目的是为了修正触摸点的直径，防止超过100%
       this.pageX = this.progressLocation.pageX + this.progressLocation.width - 10
     }
+    console.log(this.pageX)
     this.forceUpdate()
     //通过百分比计算视频的播放时间
     this.changeMoveTime()
   }, 16)
 
   changeMoveTime = () => {
-    this.props.changeMoveTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width )
+    this.props.changeMoveTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
   }
 
   //触摸结束时回调
@@ -119,7 +110,7 @@ export default class Progress extends Component<IProps, {}> {
 
 
   render() {
-    console.log('render progress')
+    console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width))
     // Slider
     return (
       <View style={this.props.style} onLayout={(event: LayoutChangeEvent) => {

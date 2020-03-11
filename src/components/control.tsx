@@ -41,7 +41,7 @@ class Control extends React.Component<IProps> {
   render() {
     const { moveTime } = this.state
     const { changeCurrentTime, changePaused, changeProgress, paused, currentTime, duration, rate, isPortrait } = this.props
-    console.log('render control', moveTime, currentTime)
+    console.log('render control')
 
     return (
       <View style={{
