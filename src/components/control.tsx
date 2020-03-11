@@ -16,6 +16,13 @@ interface IProps {
   controlShow: boolean
 }
 
+const TotalTime: React.FC<{ duration: number }> = React.memo((props) => {
+  return <Text style={{
+    color: '#fff',
+    fontSize: 12
+  }}>{` / ${Util.formSecondTotHMS(props.duration)}`}</Text>
+})
+
 
 class Control extends React.Component<IProps> {
 
@@ -70,7 +77,8 @@ class Control extends React.Component<IProps> {
             thumbImage={require('../images/icon_control_slider.png')}
             thumbTintColor="#ffffff"
             minimumValue={0}
-            value={time}
+            step={1}
+            value={moveTime}
             maximumValue={duration}
             onValueChange={this.changeMoveTime}
             onSlidingComplete={this.complete}
@@ -115,10 +123,7 @@ class Control extends React.Component<IProps> {
               color: '#fff',
               fontSize: 12
             }}>{Util.formSecondTotHMS(time)}</Text>
-            <Text style={{
-              color: '#fff',
-              fontSize: 12
-            }}>{` / ${Util.formSecondTotHMS(duration)}`}</Text>
+            <TotalTime duration={duration}/>
           </View>
 
           <View style={{

@@ -17,6 +17,13 @@ var DEFAULT_URL = 'https://grewer.github.io/dataSave/office/test.xls'
 // 需要加 https://view.officeapps.live.com/op/view.aspx?src=
 
 class WebViewTest extends React.Component {
+  componentDidMount(): void {
+    const html = `<video controls width="250" controlslist="nodownload">
+                    <source src="https://www.runoob.com/try/demo_source/movie.mp4"
+                            type="video/mp4">
+                </video>`
+  }
+
 
   state = {
     loadingProgress: 0
@@ -86,7 +93,7 @@ class WebViewTest extends React.Component {
                  androidHardwareAccelerationDisabled={true}
                  allowUniversalAccessFromFileURLs={true}
                  cacheEnabled={true}
-                 userAgent={`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`}
+                 userAgent={`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36`}
                  renderError={errorName => <View><Text>{errorName}</Text></View>}
         >
         </WebView>
