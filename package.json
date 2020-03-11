@@ -11,6 +11,7 @@
     "checkDep": "cd android && ./gradlew  :app:dependencies"
   },
   "dependencies": {
+    "@react-native-community/slider": "1.1.4",
     "@types/react-native-doc-viewer": "^2.7.1",
     "react": "16.8.3",
     "react-native": "0.59.9",

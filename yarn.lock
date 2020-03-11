@@ -843,6 +843,11 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
+"@react-native-community/slider@1.1.4":
+  version "1.1.4"
+  resolved "http://192.168.2.116:4873/@react-native-community%2fslider/-/slider-1.1.4.tgz#ff7438afbc194d61f397e9258d78941c014ac110"
+  integrity sha1-/3Q4r7wZTWHzl+kljXiUHAFKwRA=
+
 "@react-navigation/core@~3.4.1":
   version "3.4.2"
   resolved "http://192.168.2.116:4873/@react-navigation%2fcore/-/core-3.4.2.tgz#bec563e94fde40fbab3730cdc97f22afbb2a1498"

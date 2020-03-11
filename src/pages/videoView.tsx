@@ -21,10 +21,6 @@ import Video from 'react-native-video'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
 import Control from '../components/control'
 
-
-// todo
-//  点击任何按钮应延长 control 的显示时间
-
 interface IState {
   volume: number;
   duration: number;
@@ -209,10 +205,10 @@ export default class VideoView extends Component<any, IState> {
     // addr = require('../assets/index.m3u8')
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
     // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
-    addr = {
-      uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
-      type: 'm3u8'
-    }
+    // addr = {
+    //   uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
+    //   type: 'm3u8'
+    // }
     console.log('render video views')
     return (
       <View style={{

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-import Progress from './progress'
 import Util from '../utils/util'
 import Orientation from 'react-native-orientation-locker'
+import Slider from '@react-native-community/slider'
 
 interface IProps {
   changeCurrentTime: (rate: number) => void
@@ -25,23 +25,17 @@ class Control extends React.Component<IProps> {
     this.setState({ moveTime: rate * this.props.duration })
   }
 
-  //获取视频当期播放的百分比
-  getCurrentTimePercentage() {
-    const { currentTime, duration } = this.props
-    if (currentTime > 0) {
-      const rate = parseFloat(`${currentTime}`) / parseFloat(`${duration}`)
-      if (rate > 100) {
-        return '100%'
-      }
-      return rate * 100 + '%'
-    }
-    return 0 + '%'
-  };
+  complete = (rate: number) => {
+    console.log(rate)
+    this.setState({ moveTime: 0 })
+    console.log(rate, this.props.duration)
+    this.props.changeProgress(rate)
+  }
 
   render() {
     const { moveTime } = this.state
-    const { changeCurrentTime, changePaused, changeProgress, paused, currentTime, duration, rate, isPortrait } = this.props
-    console.log('render control')
+    const { changePaused, paused, currentTime, duration, rate, isPortrait } = this.props
+    console.log('render control', moveTime)
 
     return (
       <View style={{
@@ -59,17 +53,23 @@ class Control extends React.Component<IProps> {
           backgroundColor: 'rgba(0,0,0,0)'
         }}>
 
-          <Progress changeCurrentTime={changeCurrentTime}
-                    changeProgress={changeProgress}
-                    pLengh={this.getCurrentTimePercentage()}
-                    changeMoveTime={this.changeMoveTime}
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      flex: 1,
-                      width: '100%',
-                      backgroundColor: 'rgba(0,0,0,0)'
-                    }}/>
+          <Slider
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              width: '100%',
+              backgroundColor: 'rgba(0,0,0,0)'
+            }}
+            thumbImage={require('../images/icon_control_slider.png')}
+            thumbTintColor="#ffffff"
+            minimumValue={0}
+            maximumValue={1}
+            onValueChange={this.changeMoveTime}
+            onSlidingComplete={this.complete}
+            minimumTrackTintColor="#FFFFFF"
+            maximumTrackTintColor="#999"
+          />
         </View>
 
         <View style={{
