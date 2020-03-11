@@ -5157,10 +5157,10 @@ react-native-typescript-transformer@^1.2.13:
     semver "^5.4.1"
     source-map "^0.5.6"
 
-react-native-video@5.0.0:
-  version "5.0.0"
-  resolved "http://192.168.2.116:4873/react-native-video/-/react-native-video-5.0.0.tgz#30b58e31f0776bfa8dc71109c25114d4e50d9209"
-  integrity sha1-MLWOMfB3a/qNxxEJwlEU1OUNkgk=
+react-native-video@4.4.4:
+  version "4.4.4"
+  resolved "http://192.168.2.116:4873/react-native-video/-/react-native-video-4.4.4.tgz#e33da29990556a9b2d575d6b2e88190fc04d9b50"
+  integrity sha1-4z2imZBVapstV11rLogZD8BNm1A=
   dependencies:
     keymirror "^0.1.1"
     prop-types "^15.5.10"

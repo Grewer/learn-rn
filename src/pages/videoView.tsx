@@ -224,7 +224,7 @@ export default class VideoView extends Component<any, IState> {
         backgroundColor: '#ccc',
         position: 'relative'
       }}>
-        <View style={{ width: videoScreen.width, height: videoScreen.height }}>
+        <View style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
           {/*关于 iOS 加载 HTTP https://www.npmjs.com/package/react-native-video#ios-app-transport-security*/}
           <Video ref={(ref) => {
             this.video = ref
@@ -239,14 +239,13 @@ export default class VideoView extends Component<any, IState> {
                  muted={this.state.muted}
                  resizeMode={this.state.resizeMode as any}
                  repeat={false}
-                 controls={true}
                  onLoad={this.onLoad}
                  onProgress={this.onProgress}
                  onEnd={this.onEnd}
                  onError={(err) => {
                    console.log('onError', err)
                  }}
-                 // useTextureView={false} // android 某种设置 test
+                 useTextureView={false} // android 某种设置 test
           />
           {loading && <View style={[styles.loading, styles.horizontal]}>
               <ActivityIndicator/>
