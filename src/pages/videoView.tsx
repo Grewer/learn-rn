@@ -77,6 +77,7 @@ export default class VideoView extends Component<any, IState> {
   private videoScreen: { width: number; paddingTop: number; paddingLeft: number; height: number, rate?: number }
   private statusHeight: number
   private video: InstanceType<typeof Video>
+  private controlRef: React.RefObject<any> = React.createRef()
 
   constructor(props: any) {
     super(props)
@@ -195,7 +196,8 @@ export default class VideoView extends Component<any, IState> {
       currentTime,
       isPortrait,
       changeCurrentTime: this.changeCurrentTime,
-      changePaused: this.changePaused
+      changePaused: this.changePaused,
+      controlShow
     }
 
     //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
@@ -213,7 +215,7 @@ export default class VideoView extends Component<any, IState> {
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
-        paddingLeft: videoScreen.paddingLeft,
+        // paddingLeft: videoScreen.paddingLeft, // 安卓显示问题
         flex: 1,
         justifyContent: isPortrait ? 'flex-start' : 'center',
         alignItems: isPortrait ? 'center' : 'flex-start',
@@ -323,8 +325,7 @@ export default class VideoView extends Component<any, IState> {
                 <Text style={{ color: '#fff' }}>2.0</Text>
               </TouchableOpacity>
             </View>
-            {controlShow &&
-            <Control {...controlConfig}/>}
+            <Control ref={this.controlRef} {...controlConfig}/>
           </View>
         </View>
       </View>
@@ -413,8 +414,8 @@ export default class VideoView extends Component<any, IState> {
 
   }
   //设置视频的播放进度
-  changeProgress = (rate: number) => {
-    this.video.seek(rate * this.state.duration)
+  changeProgress = (time: number) => {
+    this.video.seek(time)
   }
 
   //改变视频的播放时间
@@ -450,6 +451,9 @@ export default class VideoView extends Component<any, IState> {
     setTimeout(() => {
       this.setState({ paused: true })
     }, 100)
+    if (this.controlRef.current) {
+      this.controlRef.current.clearMoveTime()
+    }
   }
 }
 

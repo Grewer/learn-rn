@@ -13,37 +13,45 @@ interface IProps {
   changePaused: () => void
   isPortrait: boolean
   rate: number
+  controlShow: boolean
 }
 
 
 class Control extends React.Component<IProps> {
+
   state = {
     moveTime: 0
   }
 
-  changeMoveTime = (rate: number) => {
-    this.setState({ moveTime: rate * this.props.duration })
+  changeMoveTime = (moveTime: number) => {
+    this.setState({ moveTime })
   }
 
-  complete = (rate: number) => {
-    console.log(rate)
+  clearMoveTime = () => {
     this.setState({ moveTime: 0 })
-    console.log(rate, this.props.duration)
-    this.props.changeProgress(rate)
+  }
+
+  complete = (time: number) => {
+    console.log(time)
+    if (!this.props.paused) {
+      this.setState({ moveTime: 0 })
+    }
+    console.log(time, this.props.duration)
+    this.props.changeProgress(time)
   }
 
   render() {
     const { moveTime } = this.state
-    const { changePaused, paused, currentTime, duration, rate, isPortrait } = this.props
-    console.log('render control', moveTime)
-
+    const { changePaused, paused, duration, currentTime, rate, isPortrait, controlShow } = this.props
+    const time = moveTime ? moveTime : currentTime
+    console.log('render control', moveTime, time)
     return (
       <View style={{
         width: '100%',
         height: 60,
         position: 'absolute',
         bottom: 0,
-        left: 0,
+        left: controlShow ? 0 : -1000,
         backgroundColor: 'rgba(0,0,0,0.5)'
       }}>
         <View style={{
@@ -57,14 +65,13 @@ class Control extends React.Component<IProps> {
             style={{
               justifyContent: 'center',
               alignItems: 'center',
-              flex: 1,
               width: '100%',
-              backgroundColor: 'rgba(0,0,0,0)'
             }}
             thumbImage={require('../images/icon_control_slider.png')}
             thumbTintColor="#ffffff"
             minimumValue={0}
-            maximumValue={1}
+            value={time}
+            maximumValue={duration}
             onValueChange={this.changeMoveTime}
             onSlidingComplete={this.complete}
             minimumTrackTintColor="#FFFFFF"
@@ -107,7 +114,7 @@ class Control extends React.Component<IProps> {
             <Text style={{
               color: '#fff',
               fontSize: 12
-            }}>{Util.formSecondTotHMS(moveTime ? moveTime : currentTime)}</Text>
+            }}>{Util.formSecondTotHMS(time)}</Text>
             <Text style={{
               color: '#fff',
               fontSize: 12
