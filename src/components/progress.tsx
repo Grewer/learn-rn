@@ -23,6 +23,20 @@ interface IProps {
   changeCurrentTime: (rate: number) => void
   changeProgress: (rate: number) => void
   pLengh: string
+  changeMoveTime: (rate: number) => void
+}
+
+
+function throttle(func: Function, delay: number) {
+  let prev = Date.now()
+  return function (evt: any) {
+    const context = this
+    const now = Date.now()
+    if (now - prev >= delay) {
+      func.call(context, evt)
+      prev = Date.now()
+    }
+  }
 }
 
 export default class Progress extends Component<IProps, {}> {
@@ -74,8 +88,8 @@ export default class Progress extends Component<IProps, {}> {
   }
 
   //触摸点移动时回调
-  onMove = (e: GestureResponderEvent) => {
-
+  onMove = throttle((e: GestureResponderEvent) => {
+    // console.log(e)
     //获取手指相对屏幕 x的坐标，并设计拖动按钮的位置，拖动按钮不能超出进度条的位置
     this.pageX = e.nativeEvent.pageX
 
@@ -85,22 +99,27 @@ export default class Progress extends Component<IProps, {}> {
       //-10的目的是为了修正触摸点的直径，防止超过100%
       this.pageX = this.progressLocation.pageX + this.progressLocation.width - 10
     }
-    this.setState({
-      ...this.state
-    })
+    this.forceUpdate()
     //通过百分比计算视频的播放时间
-    this.props.changeCurrentTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
+    this.changeMoveTime()
+  }, 16)
+
+  changeMoveTime = () => {
+    this.props.changeMoveTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width )
   }
 
   //触摸结束时回调
   onEnd = () => {
     //触摸事件结束后，设置视频的播放进度
+    this.props.changeMoveTime(0)
+    this.props.changeCurrentTime((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
     this.props.changeProgress((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
     this.isMove = false
   }
 
 
   render() {
+    console.log('render progress')
     // Slider
     return (
       <View style={this.props.style} onLayout={(event: LayoutChangeEvent) => {

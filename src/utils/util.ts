@@ -40,8 +40,8 @@ export default class Util {
   }
 
   //把传入的秒数格式化成 时分秒（00：00：00），
-  static formSecondTotHMS(second: string) {
-    let _second = parseInt(second)
+  static formSecondTotHMS(second: number) {
+    let _second = parseInt(`${second}`)
     let hh = 0, mm = 0, ss = 0
     if (_second > 0) {
       ss = parseInt(`${_second % 60}`)

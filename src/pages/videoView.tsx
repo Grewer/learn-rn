@@ -18,13 +18,26 @@ import {
 } from 'react-native'
 import Util from '../utils/util'
 import Video from 'react-native-video'
-import Progress from '../components/progress'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
+import Control from '../components/control'
 
 
 // todo
 //  点击任何按钮应延长 control 的显示时间
 
+interface IState {
+  volume: number;
+  duration: number;
+  currentTime: number;
+  paused: boolean;
+  rate: number;
+  rateShow: boolean;
+  controlShow: boolean;
+  isPortrait: boolean;
+  resizeMode: string;
+  loading: boolean;
+  muted: boolean
+}
 
 const Header: React.FC<{
   controlShow: boolean
@@ -61,7 +74,7 @@ const Header: React.FC<{
     <Text style={{ color: '#fff' }}>{props.title}</Text>
   </View>
 })
-export default class VideoView extends Component<any, any> {
+export default class VideoView extends Component<any, IState> {
   private timeOut: NodeJS.Timeout
   private panResponder: PanResponderInstance
   private videoRatio: { rate?: number; width: number; height: number }
@@ -141,7 +154,7 @@ export default class VideoView extends Component<any, any> {
       this.setState({
         controlShow: false
       })
-    }, 3000)
+    }, 5000)
   }
 
   componentDidMount() {
@@ -167,24 +180,42 @@ export default class VideoView extends Component<any, any> {
     this.setState({ loading: false })
   }
 
+  changePaused = () => {
+    this.setState({
+      paused: !this.state.paused
+    })
+  }
+
   render() {
     const { navigation } = this.props
     const { videoData } = navigation.state.params
     const videoScreen = this.videoScreen
-    const { loading, controlShow, isPortrait } = this.state
+    const { loading, controlShow, isPortrait, currentTime, duration, paused, rate } = this.state
+
+    const controlConfig = {
+      duration,
+      paused, rate,
+      changeProgress: this.changeProgress,
+      currentTime,
+      isPortrait,
+      changeCurrentTime: this.changeCurrentTime,
+      changePaused: this.changePaused
+    }
+
     //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
     const addr4 = require('../assets/4.mp4')
     const addr1 = require('../assets/1.mp4')
     let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
     // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
+    console.log('render video views')
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
         paddingLeft: videoScreen.paddingLeft,
         flex: 1,
-        justifyContent: this.state.isPortrait ? 'flex-start' : 'center',
-        alignItems: this.state.isPortrait ? 'center' : 'flex-start',
+        justifyContent: isPortrait ? 'flex-start' : 'center',
+        alignItems: isPortrait ? 'center' : 'flex-start',
         backgroundColor: '#ccc',
         position: 'relative'
       }}>
@@ -201,7 +232,7 @@ export default class VideoView extends Component<any, any> {
                  paused={this.state.paused}
                  volume={this.state.volume}
                  muted={this.state.muted}
-                 resizeMode={this.state.resizeMode}
+                 resizeMode={this.state.resizeMode as any}
                  repeat={false}
                  onLoad={this.onLoad}
                  onProgress={this.onProgress}
@@ -217,7 +248,7 @@ export default class VideoView extends Component<any, any> {
           <View {...this.panResponder.panHandlers} style={{
             justifyContent: 'center',
             alignItems: 'flex-start',
-            width: '100%',
+            width: this.videoScreen.width,
             height: '100%',
             position: 'absolute',
             top: 0,
@@ -291,127 +322,8 @@ export default class VideoView extends Component<any, any> {
                 <Text style={{ color: '#fff' }}>2.0</Text>
               </TouchableOpacity>
             </View>
-            {/*control*/}
-            <View style={{
-              width: this.videoScreen.width - 4,
-              height: 60,
-              position: 'absolute',
-              bottom: (this.state.controlShow) ? 0 : -1000,
-              left: 0,
-              backgroundColor: 'rgba(0,0,0,0.5)'
-            }}>
-              <View style={{
-                flexDirection: 'row',
-                width: '100%',
-                height: '50%',
-                backgroundColor: 'rgba(0,0,0,0)'
-              }}>
-
-                <Progress changeCurrentTime={this.changeCurrentTime}
-                          changeProgress={this.changeProgress}
-                          pLengh={this.getCurrentTimePercentage()}
-                          style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flex: 1,
-                            width: '100%',
-                            backgroundColor: 'rgba(0,0,0,0)'
-                          }}/>
-
-
-              </View>
-
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '100%',
-                height: '50%',
-                backgroundColor: 'rgba(0,0,0,0)'
-              }}>
-
-                <View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  flex: 1,
-                  height: '100%',
-                }}>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      console.log('Play or Paused', !this.state.paused)
-                      this.setState({
-                        paused: !this.state.paused
-                      })
-                    }}
-                    style={{
-                      height: '100%',
-                      width: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}>
-                    <Image style={{ height: 25, width: 25 }}
-                           source={this.state.paused ? require('../images/play.png') : require('../images/pause.png')}/>
-                  </TouchableOpacity>
-
-                  <Text style={{
-                    color: '#fff',
-                    fontSize: 12
-                  }}>{Util.formSecondTotHMS(this.state.currentTime)}</Text>
-                  <Text style={{
-                    color: '#fff',
-                    fontSize: 12
-                  }}>{` / ${Util.formSecondTotHMS(this.state.duration)}`}</Text>
-                </View>
-
-                <View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  flex: 1,
-                  height: '100%',
-                  backgroundColor: 'rgba(0,0,0,0)'
-                }}>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({
-                        rateShow: true
-                      })
-                    }}
-                    style={{
-                      height: '100%',
-                      width: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}>
-                    <Text
-                      style={{ color: '#fff' }}>{this.state.rate == 1 ? '倍速' : this.state.rate + 'x'}</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (this.state.isPortrait) {
-                        Orientation.lockToLandscapeRight()
-                      } else {
-                        Orientation.lockToPortrait()
-                      }
-                    }}
-                    style={{
-                      height: '100%',
-                      width: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}>
-                    <Image style={{ height: 25, width: 25 }}
-                           source={require('../images/bigscreen.png')}/>
-                  </TouchableOpacity>
-
-                </View>
-
-              </View>
-            </View>
+            {controlShow &&
+            <Control {...controlConfig}/>}
           </View>
         </View>
       </View>
@@ -505,19 +417,11 @@ export default class VideoView extends Component<any, any> {
   }
 
   //改变视频的播放时间
-  changeCurrentTime = (rate: number) => {
+  changeCurrentTime: (rate: number) => void = (rate: number) => {
     this.setState({
       currentTime: rate * this.state.duration
     })
   }
-
-  //获取视频当期播放的百分比
-  getCurrentTimePercentage() {
-    if (this.state.currentTime > 0) {
-      return parseFloat(this.state.currentTime) / parseFloat(this.state.duration) * 100 + '%'
-    }
-    return 0 + '%'
-  };
 
   //加载视频获取视频相关参数
   onLoad = (data: any) => {
