@@ -208,6 +208,7 @@ export default class VideoView extends Component<any, IState> {
     let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
     // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
+    addr = { uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8' }
     console.log('render video views')
     return (
       <View style={{

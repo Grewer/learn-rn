@@ -27,7 +27,6 @@ interface IProps {
 }
 
 
-
 export default class Progress extends Component<IProps, {}> {
   private pageX: number
   private isMove: boolean
@@ -117,20 +116,20 @@ export default class Progress extends Component<IProps, {}> {
 
         // let {x, y, width, height} = event.nativeEvent.layout;
         //拿到这个view的x位置和宽度
-        {
-          NativeModules.UIManager.measure(event.currentTarget, (x, y, width, height, pageX, pageY) => {
-            //安卓手机获取的值与ios不一样，特殊处理
-            console.log(event, x, y, width, height)
-            if (Util.isPlatform('android')) {
-              x = pageX - Util.getWidth()
-            }
-            this.progressLocation = {
-              name: 'progressLocation',
-              pageX: x,
-              width: width,
-            }
-          })
-        }
+
+        NativeModules.UIManager.measure(event.target, (x, y, width, height, pageX, pageY) => {
+          //安卓手机获取的值与ios不一样，特殊处理
+          console.log(event, x, y, width, height)
+          if (Util.isPlatform('android')) {
+            x = pageX - Util.getWidth()
+          }
+          this.progressLocation = {
+            name: 'progressLocation',
+            pageX: x,
+            width: width,
+          }
+        })
+
       }}>
         <View style={styles.maxProgress}>
           <View style={[styles.currentProgress, {
