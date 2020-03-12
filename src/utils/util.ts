@@ -36,7 +36,6 @@ export default class Util {
       Platform.OS === 'ios' &&
       (size.height === 812 || size.width === 812 || size.height === 896 || size.width === 896)
     )
-
   }
 
   //把传入的秒数格式化成 时分秒（00：00：00），
@@ -58,18 +57,6 @@ export default class Util {
       return zero(mm) + ':' + zero(ss)
     } else {
       return zero(hh) + ':' + zero(mm) + ':' + zero(ss)
-    }
-  }
-
-  static throttle = (func: Function, delay: number) => {
-    let prev = Date.now()
-    return function (evt: any) {
-      const context = this
-      const now = Date.now()
-      if (now - prev >= delay) {
-        func.call(context, evt)
-        prev = Date.now()
-      }
     }
   }
 

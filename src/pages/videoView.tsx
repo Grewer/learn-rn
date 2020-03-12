@@ -197,7 +197,6 @@ export default class VideoView extends Component<any, IState> {
       isPortrait,
       changeCurrentTime: this.changeCurrentTime,
       changePaused: this.changePaused,
-      controlShow
     }
 
     //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
@@ -212,17 +211,14 @@ export default class VideoView extends Component<any, IState> {
     //   type: 'm3u8'
     // }
     //
-    addr = {
-      // uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311144549981/playlist.m3u8',
-      uri: 'http://192.168.0.106:7888/playlist.m3u8',
-      type: 'm3u8',
-      headers: {
-        userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
-      }
-      // type: 'mp4',
-      // type: 'audio/mpegurl',
-      // type: 'application/x-mpegURL'
-    }
+    // addr = {
+    //   // uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311144549981/playlist.m3u8',
+    //   uri: 'http://192.168.0.106:7888/playlist.m3u8',
+    //   type: 'm3u8',
+    //   headers: {
+    //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
+    //   }
+    // }
     console.log('render video views')
     return (
       <View style={{
@@ -340,7 +336,15 @@ export default class VideoView extends Component<any, IState> {
                 <Text style={{ color: '#fff' }}>2.0</Text>
               </TouchableOpacity>
             </View>
-            <Control ref={this.controlRef} {...controlConfig}/>
+            <View style={[{
+              width: '100%',
+              height: 60,
+              position: 'absolute',
+              bottom: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)'
+            }, { left: controlShow ? 0 : -1000 }]}>
+              <Control ref={this.controlRef} {...controlConfig}/>
+            </View>
           </View>
         </View>
       </View>

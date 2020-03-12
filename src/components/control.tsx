@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Util from '../utils/util'
-import Orientation from 'react-native-orientation-locker'
 import Slider from '@react-native-community/slider'
+import Orientation from 'react-native-orientation-locker'
 
 interface IProps {
   changeCurrentTime: (rate: number) => void
@@ -13,7 +13,6 @@ interface IProps {
   changePaused: () => void
   isPortrait: boolean
   rate: number
-  controlShow: boolean
 }
 
 const TotalTime: React.FC<{ duration: number }> = React.memo((props) => {
@@ -39,9 +38,14 @@ const StartAndPaused: React.FC<Pick<IProps, 'changePaused' | 'paused'>> = React.
 
 
 class Control extends React.Component<IProps> {
+  private move: boolean = false
 
   state = {
     moveTime: 0
+  }
+
+  onSlidingStart = () => {
+    this.move = true
   }
 
   changeMoveTime = (moveTime: number) => {
@@ -57,24 +61,26 @@ class Control extends React.Component<IProps> {
     if (!this.props.paused) {
       this.setState({ moveTime: 0 })
     }
+    this.move = false
     console.log(time, this.props.duration)
     this.props.changeProgress(time)
   }
 
   render() {
     const { moveTime } = this.state
-    const { changePaused, paused, duration, currentTime, rate, isPortrait, controlShow } = this.props
+    const { changePaused, paused, duration, currentTime, rate, isPortrait } = this.props
     const time = moveTime ? moveTime : currentTime
     console.log('render control', moveTime, time)
     return (
-      <View style={[styles.container, { left: controlShow ? 0 : -1000 }]}>
+      <>
         <Slider
+          onSlidingStart={this.onSlidingStart}
           style={styles.slider}
           thumbImage={require('../images/icon_control_slider.png')}
           thumbTintColor="#ffffff"
           minimumValue={0}
           step={1}
-          value={time}
+          value={this.move ? currentTime : undefined}
           maximumValue={duration}
           onValueChange={this.changeMoveTime}
           onSlidingComplete={this.complete}
@@ -93,44 +99,44 @@ class Control extends React.Component<IProps> {
 
           <View style={styles.toolRight}>
 
-            {/*<TouchableOpacity*/}
-            {/*  onPress={() => {*/}
-            {/*    this.setState({*/}
-            {/*      rateShow: true*/}
-            {/*    })*/}
-            {/*  }}*/}
-            {/*  style={{*/}
-            {/*    height: '100%',*/}
-            {/*    width: 50,*/}
-            {/*    justifyContent: 'center',*/}
-            {/*    alignItems: 'center'*/}
-            {/*  }}>*/}
-            {/*  <Text*/}
-            {/*    style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>*/}
-            {/*</TouchableOpacity>*/}
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({
+                  rateShow: true
+                })
+              }}
+              style={{
+                height: '100%',
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text
+                style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
+            </TouchableOpacity>
 
-            {/*<TouchableOpacity*/}
-            {/*  onPress={() => {*/}
-            {/*    if (isPortrait) {*/}
-            {/*      Orientation.lockToLandscapeRight()*/}
-            {/*    } else {*/}
-            {/*      Orientation.lockToPortrait()*/}
-            {/*    }*/}
-            {/*  }}*/}
-            {/*  style={{*/}
-            {/*    height: '100%',*/}
-            {/*    width: 50,*/}
-            {/*    justifyContent: 'center',*/}
-            {/*    alignItems: 'center'*/}
-            {/*  }}>*/}
-            {/*  <Image style={{ height: 25, width: 25 }}*/}
-            {/*         source={require('../images/bigscreen.png')}/>*/}
-            {/*</TouchableOpacity>*/}
+            <TouchableOpacity
+              onPress={() => {
+                if (isPortrait) {
+                  Orientation.lockToLandscapeRight()
+                } else {
+                  Orientation.lockToPortrait()
+                }
+              }}
+              style={{
+                height: '100%',
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image style={{ height: 25, width: 25 }}
+                     source={require('../images/bigscreen.png')}/>
+            </TouchableOpacity>
 
           </View>
 
         </View>
-      </View>
+      </>
     )
   }
 }
