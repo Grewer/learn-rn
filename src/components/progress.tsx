@@ -47,13 +47,10 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     }
     console.log(this.props)
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => {
-        return true
-      },
-      onStartShouldSetPanResponderCapture: () => true,
-      onMoveShouldSetPanResponder: (_, gestureState) => {
-        return true
-      },
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
       onPanResponderGrant: (evt) => {
         this.onStart(evt)
       },
@@ -73,9 +70,9 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       onPanResponderTerminate: () => {
         this.onEnd()
       },
-      onShouldBlockNativeResponder:()=>{
-        return false
-      }
+      onShouldBlockNativeResponder: () => {
+        return true
+      },
     })
   }
 
@@ -105,8 +102,8 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     const rate = (this.pageX - progressLength) / this.progressLocation.width
     console.log('rate', rate)
     this.props.onMove && this.props.onMove(rate)
-    this.progressStyles.style.width = Math.floor(rate * 100) + '%'
-    console.log('progressStyles', this.progressStyles)
+    this.progressStyles.style.width = (rate * 100).toFixed(0) + '%'
+    console.log('progressStyles', this.progressStyles, this.pageX, progressLength, this.progressLocation.width)
     this._updateNativeStyles()
   }
 
@@ -125,13 +122,13 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     NativeModules.UIManager.measure(event.target, (x, y, width, height, pageX, pageY) => {
       //安卓手机获取的值与ios不一样，特殊处理
       if (Util.isPlatform('android')) {
-        // x = pageX - 10
+        // x = pageX + 10
       }
       console.log('onLayout', x, y, width, height, pageX)
       this.progressLocation = {
         name: 'progressLocation',
         pageX: x,
-        width: width,
+        width,
       }
     })
   }
@@ -148,6 +145,8 @@ export default class Progress extends React.PureComponent<IProps, {}> {
           <View {...this.panResponder.panHandlers} style={styles.dragWrap}>
             <View style={styles.drag}/>
           </View>
+          <View style={{ backgroundColor: '#999', width: '100%', height: 2, zIndex: 1000 }}>
+          </View>
         </View>
       </View>
     )
@@ -160,14 +159,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    height: 2,
-    backgroundColor: '#999'
+    height: 30
   },
   currentProgress: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 2,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    zIndex: 1001
   },
   dragWrap: {
     justifyContent: 'center',

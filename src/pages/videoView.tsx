@@ -104,6 +104,9 @@ export default class VideoView extends Component<any, IState> {
       onStartShouldSetPanResponder: () => {
         return true
       },
+      onPanResponderTerminationRequest: () => {
+        return true
+      },
       onMoveShouldSetPanResponder: (_evt, gestureState) => {
         let { dx, dy } = gestureState
         return (Math.abs(dx) > 5) || (Math.abs(dy) > 5)
@@ -120,6 +123,7 @@ export default class VideoView extends Component<any, IState> {
         this.clearTimeout()
       },
       onPanResponderMove: () => {
+        console.log('view onPanResponderMove')
         return false
       },
       onPanResponderRelease: () => {
@@ -130,6 +134,7 @@ export default class VideoView extends Component<any, IState> {
         console.log('view onMoveShouldSetPanResponderCapture')
         return false
       },
+      onStartShouldSetPanResponderCapture: () => false
     })
   }
 
@@ -343,11 +348,12 @@ export default class VideoView extends Component<any, IState> {
               height: 60,
               position: 'absolute',
               bottom: 0,
+              left: 0,
               backgroundColor: 'rgba(0,0,0,0.5)'
             },
               // { left: controlShow ? 0 : -1000 }
-              ]}>
-              <Control ref={this.controlRef} {...controlConfig}/>
+            ]}>
+                <Control ref={this.controlRef} {...controlConfig}/>
             </View>}
           </View>
         </View>
@@ -357,16 +363,6 @@ export default class VideoView extends Component<any, IState> {
 
   //计算视频的显示布局
   calculateParams = (isPortrait: boolean) => {
-    // const { navigation } = this.props
-    // const params = navigation.state.params
-    // const videoData = params.videoData
-    // //获取视频分辨率
-    // this.videoRatio = {
-    //   width: videoData.videoWidth,
-    //   height: videoData.videoHeight,
-    //   rate: videoData.videoWidth / videoData.videoHeight
-    // }
-
     Util.getSize()
 
     let width = Util.getWidth()

@@ -70,7 +70,7 @@ class Control extends React.Component<IProps> {
     const { moveTime } = this.state
     const { changePaused, paused, duration, currentTime, rate, isPortrait } = this.props
     const time = moveTime ? moveTime : currentTime
-    console.log('render control', moveTime, time)
+    // console.log('render control', moveTime, time)
     return (
       <>
         <Progress style={styles.slider}
@@ -78,55 +78,55 @@ class Control extends React.Component<IProps> {
           // onMove={this.changeMoveTime}
           // onEnd={this.complete}
         />
-        <View style={styles.tools}>
-          <View style={styles.toolLeft}>
-            <StartAndPaused paused={paused} changePaused={changePaused}/>
-            <Text style={{
-              color: '#fff',
-              fontSize: 12
-            }}>{Util.formSecondTotHMS(time)}</Text>
-            <TotalTime duration={duration}/>
-          </View>
+        {/*<View style={styles.tools}>*/}
+        {/*  <View style={styles.toolLeft}>*/}
+        {/*    <StartAndPaused paused={paused} changePaused={changePaused}/>*/}
+        {/*    <Text style={{*/}
+        {/*      color: '#fff',*/}
+        {/*      fontSize: 12*/}
+        {/*    }}>{Util.formSecondTotHMS(time)}</Text>*/}
+        {/*    <TotalTime duration={duration}/>*/}
+        {/*  </View>*/}
 
-          <View style={styles.toolRight}>
+        {/*  <View style={styles.toolRight}>*/}
 
-            <TouchableOpacity
-              onPress={() => {
-                this.setState({
-                  rateShow: true
-                })
-              }}
-              style={{
-                height: '100%',
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Text
-                style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
-            </TouchableOpacity>
+        {/*    <TouchableOpacity*/}
+        {/*      onPress={() => {*/}
+        {/*        this.setState({*/}
+        {/*          rateShow: true*/}
+        {/*        })*/}
+        {/*      }}*/}
+        {/*      style={{*/}
+        {/*        height: '100%',*/}
+        {/*        width: 50,*/}
+        {/*        justifyContent: 'center',*/}
+        {/*        alignItems: 'center'*/}
+        {/*      }}>*/}
+        {/*      <Text*/}
+        {/*        style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>*/}
+        {/*    </TouchableOpacity>*/}
 
-            <TouchableOpacity
-              onPress={() => {
-                if (isPortrait) {
-                  Orientation.lockToLandscapeRight()
-                } else {
-                  Orientation.lockToPortrait()
-                }
-              }}
-              style={{
-                height: '100%',
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Image style={{ height: 25, width: 25 }}
-                     source={require('../images/bigscreen.png')}/>
-            </TouchableOpacity>
+        {/*    <TouchableOpacity*/}
+        {/*      onPress={() => {*/}
+        {/*        if (isPortrait) {*/}
+        {/*          Orientation.lockToLandscapeRight()*/}
+        {/*        } else {*/}
+        {/*          Orientation.lockToPortrait()*/}
+        {/*        }*/}
+        {/*      }}*/}
+        {/*      style={{*/}
+        {/*        height: '100%',*/}
+        {/*        width: 50,*/}
+        {/*        justifyContent: 'center',*/}
+        {/*        alignItems: 'center'*/}
+        {/*      }}>*/}
+        {/*      <Image style={{ height: 25, width: 25 }}*/}
+        {/*             source={require('../images/bigscreen.png')}/>*/}
+        {/*    </TouchableOpacity>*/}
 
-          </View>
+        {/*  </View>*/}
 
-        </View>
+        {/*</View>*/}
       </>
     )
   }
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     height: 60,
     position: 'absolute',
     bottom: 0,
+    left:0,
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
   slider: {
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   tools: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     width: '100%',
     height: '50%',
     backgroundColor: 'rgba(0,0,0,0)'
