@@ -32,10 +32,9 @@ export default class Progress extends React.PureComponent<IProps, {}> {
   private progressLocation: { name?: string, width: number; pageX: number }
   private panResponder: PanResponderInstance
   private progress: (null | { setNativeProps(props: Object): void })
-  private width: string
   private progressStyles = {
     style: {
-      width: this.width,
+      width: '0%',
     }
   }
   private isMove: boolean = false
