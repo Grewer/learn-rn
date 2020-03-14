@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Util from '../utils/util'
 import Slider from '@react-native-community/slider'
 import Orientation from 'react-native-orientation-locker'
+import Progress from './progress'
 
 interface IProps {
   changeCurrentTime: (rate: number) => void
@@ -48,7 +49,7 @@ class Control extends React.Component<IProps> {
     this.move = true
   }
 
-  changeMoveTime = (moveTime: number) => {
+  changeMoveTime = (rate) => {
     this.setState({ moveTime })
   }
 
@@ -73,19 +74,10 @@ class Control extends React.Component<IProps> {
     console.log('render control', moveTime, time)
     return (
       <>
-        <Slider
-          onSlidingStart={this.onSlidingStart}
-          style={styles.slider}
-          thumbImage={require('../images/icon_control_slider.png')}
-          thumbTintColor="#ffffff"
-          minimumValue={0}
-          step={1}
-          value={this.move ? currentTime : undefined}
-          maximumValue={duration}
-          onValueChange={this.changeMoveTime}
-          onSlidingComplete={this.complete}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#999"
+        <Progress style={styles.slider}
+                  value={currentTime/duration}
+                  // onMove={this.changeMoveTime}
+                  // onEnd={this.complete}
         />
         <View style={styles.tools}>
           <View style={styles.toolLeft}>

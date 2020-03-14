@@ -223,7 +223,7 @@ export default class VideoView extends Component<any, IState> {
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
-        // paddingLeft: videoScreen.paddingLeft, // 安卓显示问题
+        paddingLeft: Util.isPlatform('ios') ? videoScreen.paddingLeft : 0, // 安卓显示问题
         flex: 1,
         justifyContent: isPortrait ? 'flex-start' : 'center',
         alignItems: isPortrait ? 'center' : 'flex-start',
