@@ -8,6 +8,7 @@ import WebViewTest from './src/WebViewTest'
 import WPSOfficeScreen from './src/WPSOfficeScreen'
 import videoView from './src/pages/videoView'
 import Hot from './src/pages/hot'
+import PanResponderExample from './src/TextProgress'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -28,6 +29,10 @@ function HomeScreen(props: {
       <Button
         title="to WebViewTest "
         onPress={() => props.navigation.navigate('WebViewTest')}
+      />
+      <Button
+        title="to progress test "
+        onPress={() => props.navigation.navigate('PanResponderExample')}
       />
     </View>
   )
@@ -96,6 +101,7 @@ const RootStack = createStackNavigator(
     WebViewTest,
     WPSOfficeScreen,
     Hot,
+    PanResponderExample,
     videoView: {
       screen: videoView,
       navigationOptions: {

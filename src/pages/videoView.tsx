@@ -109,6 +109,7 @@ export default class VideoView extends Component<any, IState> {
         return (Math.abs(dx) > 5) || (Math.abs(dy) > 5)
       },
       onPanResponderGrant: () => {
+        console.log('view onPanResponderGrant')
         //显示控制层
         if (!this.state.controlShow) {
           this.setState({
@@ -126,6 +127,7 @@ export default class VideoView extends Component<any, IState> {
         this.closeControl()
       },
       onMoveShouldSetPanResponderCapture: () => {
+        console.log('view onMoveShouldSetPanResponderCapture')
         return false
       },
     })
@@ -336,15 +338,17 @@ export default class VideoView extends Component<any, IState> {
                 <Text style={{ color: '#fff' }}>2.0</Text>
               </TouchableOpacity>
             </View>
-            <View style={[{
+            {controlShow && <View style={[{
               width: '100%',
               height: 60,
               position: 'absolute',
               bottom: 0,
               backgroundColor: 'rgba(0,0,0,0.5)'
-            }, { left: controlShow ? 0 : -1000 }]}>
+            },
+              // { left: controlShow ? 0 : -1000 }
+              ]}>
               <Control ref={this.controlRef} {...controlConfig}/>
-            </View>
+            </View>}
           </View>
         </View>
       </View>

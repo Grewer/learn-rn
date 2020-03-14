@@ -1,7 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Util from '../utils/util'
-import Slider from '@react-native-community/slider'
 import Orientation from 'react-native-orientation-locker'
 import Progress from './progress'
 
@@ -75,9 +74,9 @@ class Control extends React.Component<IProps> {
     return (
       <>
         <Progress style={styles.slider}
-                  value={currentTime/duration}
-                  // onMove={this.changeMoveTime}
-                  // onEnd={this.complete}
+                  value={currentTime / duration}
+          // onMove={this.changeMoveTime}
+          // onEnd={this.complete}
         />
         <View style={styles.tools}>
           <View style={styles.toolLeft}>
@@ -144,8 +143,8 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: '100%',
-    height: '50%',
-    backgroundColor: 'rgba(0,0,0,0)'
+    height: 30,
+    justifyContent: 'center',
   },
   tools: {
     flexDirection: 'row',
