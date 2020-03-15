@@ -16,13 +16,13 @@ import {
   View,
   ViewStyle
 } from 'react-native'
-import Util from '../utils/util'
 
 interface IProps {
   style: StyleProp<ViewStyle>
   onEnd?: (rate: number) => void
   value: number
   onMove?: (rate: number) => void
+  onStart?: () => void
 }
 
 export default class Progress extends React.PureComponent<IProps, {}> {
@@ -47,18 +47,17 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     }
     console.log(this.props)
     this.panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponderCapture: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
       onPanResponderGrant: (evt) => {
         this.onStart(evt)
       },
       onPanResponderMove: (evt) => {
-        console.log(evt.nativeEvent)
-        // if (Math.abs(evt.nativeEvent.locationX) > 1) {
-        this.onMove(evt)
-        // }
+        if (Math.abs(evt.nativeEvent.locationX) > 1) {
+          this.onMove(evt)
+        }
       },
       onPanResponderRelease: () => {
         this.onEnd()
@@ -83,8 +82,8 @@ export default class Progress extends React.PureComponent<IProps, {}> {
   onStart = (e: GestureResponderEvent) => {
     //获取 按钮的 x的位置
     this.pageX = e.nativeEvent.pageX
-    console.log('start', this.pageX)
     this.isMove = true
+    this.props.onStart && this.props.onStart()
   }
 
   //触摸点移动时回调
@@ -100,10 +99,8 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       this.pageX = progressLength + this.progressLocation.width - 10
     }
     const rate = (this.pageX - progressLength) / this.progressLocation.width
-    console.log('rate', rate)
     this.props.onMove && this.props.onMove(rate)
     this.progressStyles.style.width = (rate * 100).toFixed(0) + '%'
-    console.log('progressStyles', this.progressStyles, this.pageX, progressLength, this.progressLocation.width)
     this._updateNativeStyles()
   }
 
@@ -115,15 +112,14 @@ export default class Progress extends React.PureComponent<IProps, {}> {
 
 
   onLayout = (event: LayoutChangeEvent) => {
-
     // let {x, y, width, height} = event.nativeEvent.layout;
     //拿到这个view的x位置和宽度
     // @ts-ignore
     NativeModules.UIManager.measure(event.target, (x, y, width, height, pageX, pageY) => {
       //安卓手机获取的值与ios不一样，特殊处理
-      if (Util.isPlatform('android')) {
-        // x = pageX + 10
-      }
+      // if (Util.isPlatform('android')) {
+      //   // x = pageX + 10
+      // }
       console.log('onLayout', x, y, width, height, pageX)
       this.progressLocation = {
         name: 'progressLocation',

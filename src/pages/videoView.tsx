@@ -131,7 +131,6 @@ export default class VideoView extends Component<any, IState> {
         this.closeControl()
       },
       onMoveShouldSetPanResponderCapture: () => {
-        console.log('view onMoveShouldSetPanResponderCapture')
         return false
       },
       onStartShouldSetPanResponderCapture: () => false

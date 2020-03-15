@@ -38,95 +38,89 @@ const StartAndPaused: React.FC<Pick<IProps, 'changePaused' | 'paused'>> = React.
 
 
 class Control extends React.Component<IProps> {
-  private move: boolean = false
 
   state = {
     moveTime: 0
   }
 
-  onSlidingStart = () => {
-    this.move = true
-  }
-
-  changeMoveTime = (rate) => {
-    this.setState({ moveTime })
+  changeMoveTime = (rate: number) => {
+    this.setState({ moveTime: this.props.duration * rate })
   }
 
   clearMoveTime = () => {
     this.setState({ moveTime: 0 })
   }
 
-  complete = (time: number) => {
-    console.log(time)
+  complete = (rate: number) => {
+    console.log(rate)
     if (!this.props.paused) {
       this.setState({ moveTime: 0 })
     }
-    this.move = false
-    console.log(time, this.props.duration)
-    this.props.changeProgress(time)
+    console.log(rate, this.props.duration)
+    this.props.changeProgress(rate * this.props.duration)
   }
 
   render() {
     const { moveTime } = this.state
     const { changePaused, paused, duration, currentTime, rate, isPortrait } = this.props
     const time = moveTime ? moveTime : currentTime
-    // console.log('render control', moveTime, time)
+    console.log('render control', currentTime / duration)
     return (
       <>
         <Progress style={styles.slider}
                   value={currentTime / duration}
-          // onMove={this.changeMoveTime}
-          // onEnd={this.complete}
+                  onMove={this.changeMoveTime}
+                  onEnd={this.complete}
         />
-        {/*<View style={styles.tools}>*/}
-        {/*  <View style={styles.toolLeft}>*/}
-        {/*    <StartAndPaused paused={paused} changePaused={changePaused}/>*/}
-        {/*    <Text style={{*/}
-        {/*      color: '#fff',*/}
-        {/*      fontSize: 12*/}
-        {/*    }}>{Util.formSecondTotHMS(time)}</Text>*/}
-        {/*    <TotalTime duration={duration}/>*/}
-        {/*  </View>*/}
+        <View style={styles.tools}>
+          <View style={styles.toolLeft}>
+            <StartAndPaused paused={paused} changePaused={changePaused}/>
+            <Text style={{
+              color: '#fff',
+              fontSize: 12
+            }}>{Util.formSecondTotHMS(time)}</Text>
+            <TotalTime duration={duration}/>
+          </View>
 
-        {/*  <View style={styles.toolRight}>*/}
+          <View style={styles.toolRight}>
 
-        {/*    <TouchableOpacity*/}
-        {/*      onPress={() => {*/}
-        {/*        this.setState({*/}
-        {/*          rateShow: true*/}
-        {/*        })*/}
-        {/*      }}*/}
-        {/*      style={{*/}
-        {/*        height: '100%',*/}
-        {/*        width: 50,*/}
-        {/*        justifyContent: 'center',*/}
-        {/*        alignItems: 'center'*/}
-        {/*      }}>*/}
-        {/*      <Text*/}
-        {/*        style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>*/}
-        {/*    </TouchableOpacity>*/}
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({
+                  rateShow: true
+                })
+              }}
+              style={{
+                height: '100%',
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Text
+                style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
+            </TouchableOpacity>
 
-        {/*    <TouchableOpacity*/}
-        {/*      onPress={() => {*/}
-        {/*        if (isPortrait) {*/}
-        {/*          Orientation.lockToLandscapeRight()*/}
-        {/*        } else {*/}
-        {/*          Orientation.lockToPortrait()*/}
-        {/*        }*/}
-        {/*      }}*/}
-        {/*      style={{*/}
-        {/*        height: '100%',*/}
-        {/*        width: 50,*/}
-        {/*        justifyContent: 'center',*/}
-        {/*        alignItems: 'center'*/}
-        {/*      }}>*/}
-        {/*      <Image style={{ height: 25, width: 25 }}*/}
-        {/*             source={require('../images/bigscreen.png')}/>*/}
-        {/*    </TouchableOpacity>*/}
+            <TouchableOpacity
+              onPress={() => {
+                if (isPortrait) {
+                  Orientation.lockToLandscapeRight()
+                } else {
+                  Orientation.lockToPortrait()
+                }
+              }}
+              style={{
+                height: '100%',
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Image style={{ height: 25, width: 25 }}
+                     source={require('../images/bigscreen.png')}/>
+            </TouchableOpacity>
 
-        {/*  </View>*/}
+          </View>
 
-        {/*</View>*/}
+        </View>
       </>
     )
   }
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
     height: 60,
     position: 'absolute',
     bottom: 0,
-    left:0,
+    left: 0,
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
   slider: {
