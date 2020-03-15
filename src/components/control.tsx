@@ -7,6 +7,7 @@ import Progress from './progress'
 interface IProps {
   changeCurrentTime: (rate: number) => void
   changeProgress: (rate: number) => void
+  changeRateVisible: (visible:boolean) => void
   currentTime: number
   duration: number
   paused: boolean
@@ -86,9 +87,10 @@ class Control extends React.Component<IProps> {
 
             <TouchableOpacity
               onPress={() => {
-                this.setState({
-                  rateShow: true
-                })
+                this.props.changeRateVisible(true)
+                // this.setState({
+                //   rateShow: true
+                // })
               }}
               style={{
                 height: '100%',

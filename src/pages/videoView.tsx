@@ -8,6 +8,7 @@ import React, { Component } from 'react'
 import {
   ActivityIndicator,
   Image,
+  NativeModules,
   PanResponder,
   PanResponderInstance,
   StatusBar,
@@ -78,6 +79,7 @@ export default class VideoView extends Component<any, IState> {
   private statusHeight: number
   private video: InstanceType<typeof Video>
   private controlRef: React.RefObject<any> = React.createRef()
+  private rateView: { left: number } = { left: 0 }
 
   constructor(props: any) {
     super(props)
@@ -102,6 +104,7 @@ export default class VideoView extends Component<any, IState> {
     //处理触摸事件
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => {
+        console.log('onStartShouldSetPanResponder')
         return true
       },
       onPanResponderTerminationRequest: () => {
@@ -111,8 +114,8 @@ export default class VideoView extends Component<any, IState> {
         let { dx, dy } = gestureState
         return (Math.abs(dx) > 5) || (Math.abs(dy) > 5)
       },
-      onPanResponderGrant: () => {
-        console.log('view onPanResponderGrant')
+      onPanResponderGrant: (e, g) => {
+        console.log('view onPanResponderGrant', e.nativeEvent, g)
         //显示控制层
         if (!this.state.controlShow) {
           this.setState({
@@ -121,6 +124,13 @@ export default class VideoView extends Component<any, IState> {
         }
         //清除定时器
         this.clearTimeout()
+        if (this.state.rateShow) {
+          if (e.nativeEvent.pageX < this.rateView.left) {
+            this.setState({
+              rateShow: false
+            })
+          }
+        }
       },
       onPanResponderMove: () => {
         console.log('view onPanResponderMove')
@@ -189,6 +199,10 @@ export default class VideoView extends Component<any, IState> {
     })
   }
 
+  changeRateVisible = (rateShow: boolean) => {
+    this.setState({ rateShow })
+  }
+
   render() {
     const { navigation } = this.props
     const { videoData } = navigation.state.params
@@ -203,6 +217,7 @@ export default class VideoView extends Component<any, IState> {
       isPortrait,
       changeCurrentTime: this.changeCurrentTime,
       changePaused: this.changePaused,
+      changeRateVisible: this.changeRateVisible
     }
 
     //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
@@ -270,7 +285,13 @@ export default class VideoView extends Component<any, IState> {
           }]}>
             <Header title={videoData.title} controlShow={controlShow} navigation={navigation} isPortrait={isPortrait}/>
             {/*rate*/}
-            <View style={{
+            <View onLayout={(ev) => {
+              // console.log('on rate Layout', ev.nativeEvent.layout)
+              NativeModules.UIManager.measure(ev.target, (x, y, width, height, pageX, pageY) => {
+                // console.log(x, y, width, height, pageX, pageY)
+                this.rateView.left = pageX
+              })
+            }} style={{
               zIndex: 100,
               width: 120,
               height: '100%',
@@ -279,6 +300,7 @@ export default class VideoView extends Component<any, IState> {
               position: 'absolute',
               top: 0,
               right: this.state.rateShow ? 0 : -1000,
+              // right: true ? 0 : -1000,
               backgroundColor: 'rgba(0,0,0,0.5)'
             }}>
 
@@ -289,7 +311,7 @@ export default class VideoView extends Component<any, IState> {
                     rateShow: false
                   })
                 }}
-                style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#fff' }}>1.0</Text>
               </TouchableOpacity>
 
@@ -300,7 +322,7 @@ export default class VideoView extends Component<any, IState> {
                     rateShow: false
                   })
                 }}
-                style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#fff' }}>1.25</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -310,7 +332,7 @@ export default class VideoView extends Component<any, IState> {
                     rateShow: false
                   })
                 }}
-                style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#fff' }}>1.5</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -320,7 +342,7 @@ export default class VideoView extends Component<any, IState> {
                     rateShow: false
                   })
                 }}
-                style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#fff' }}>1.75</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -330,7 +352,7 @@ export default class VideoView extends Component<any, IState> {
                     rateShow: false
                   })
                 }}
-                style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#fff' }}>2.0</Text>
               </TouchableOpacity>
             </View>
