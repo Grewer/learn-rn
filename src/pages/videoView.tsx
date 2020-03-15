@@ -91,7 +91,7 @@ export default class VideoView extends Component<any, IState> {
       muted: false,//控制音频是否静音，(true、false)
       resizeMode: 'contain',//视频缩放模式
       paused: true,//控制视频播放暂停 (true、false) ，以上是Video组件的受控的参数
-      loading: false,
+      loading: true,
       duration: 0.0,//视频的总时长
       currentTime: 0.0,//视频的当前播放进度，单位为秒
       rateShow: false,//控制进度条的显示
@@ -193,7 +193,7 @@ export default class VideoView extends Component<any, IState> {
     const { navigation } = this.props
     const { videoData } = navigation.state.params
     const videoScreen = this.videoScreen
-    const { loading, controlShow, isPortrait, currentTime, duration, paused, rate } = this.state
+    const { loading, controlShow, isPortrait, volume, resizeMode, paused, muted, currentTime, duration, rate } = this.state
 
     const controlConfig = {
       duration,
@@ -211,7 +211,7 @@ export default class VideoView extends Component<any, IState> {
     let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
     // addr = require('../assets/index.m3u8')
     // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
-    // addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
+    addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
     // addr = {
     //   uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
     //   type: 'm3u8'
@@ -225,7 +225,7 @@ export default class VideoView extends Component<any, IState> {
     //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
     //   }
     // }
-    console.log('render video views')
+    console.log('render video views', loading)
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
@@ -247,11 +247,11 @@ export default class VideoView extends Component<any, IState> {
                  onReadyForDisplay={this.stopLoading}
                  source={addr}
                  style={{ width: '100%', height: '100%' }}
-                 rate={this.state.rate}
-                 paused={this.state.paused}
-                 volume={this.state.volume}
-                 muted={this.state.muted}
-                 resizeMode={this.state.resizeMode as any}
+                 rate={rate}
+                 paused={paused}
+                 volume={volume}
+                 muted={muted}
+                 resizeMode={resizeMode as any}
                  repeat={false}
                  onLoad={this.onLoad}
                  onProgress={this.onProgress}
@@ -262,20 +262,12 @@ export default class VideoView extends Component<any, IState> {
                  playInBackground={true}
                  useTextureView={false} // android 某种设置 test
           />
-          {loading && <View style={[styles.loading, styles.horizontal]}>
-              <ActivityIndicator/>
-          </View>}
-          <View {...this.panResponder.panHandlers} style={{
-            justifyContent: 'center',
-            alignItems: 'flex-start',
+          <View style={[styles.loading, styles.horizontal]}>
+            <ActivityIndicator size="large" color="#b0b0b0" animating={loading}/>
+          </View>
+          <View {...this.panResponder.panHandlers} style={[styles.touchContainer, {
             width: this.videoScreen.width,
-            height: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            backgroundColor: 'rgba(0,0,0,0,)',
-            overflow: 'hidden'
-          }}>
+          }]}>
             <Header title={videoData.title} controlShow={controlShow} navigation={navigation} isPortrait={isPortrait}/>
             {/*rate*/}
             <View style={{
@@ -462,6 +454,7 @@ export default class VideoView extends Component<any, IState> {
   onProgress = (data: { currentTime: any; }) => {
     this.setState({ currentTime: data.currentTime })
   }
+
   //视频播放完回调
   onEnd = () => {
     console.log('onEnd')
@@ -484,7 +477,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    backgroundColor: 'rgba(0,0,0,0.6)',
     transform: [{ translateY: -20 }, { translateX: -20 }],
     borderRadius: 10,
     padding: 10
@@ -492,5 +484,15 @@ const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  touchContainer: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0)',
+    overflow: 'hidden'
   }
 })

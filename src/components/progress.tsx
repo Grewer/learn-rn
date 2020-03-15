@@ -141,7 +141,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
           <View {...this.panResponder.panHandlers} style={styles.dragWrap}>
             <View style={styles.drag}/>
           </View>
-          <View style={{ backgroundColor: '#999', width: '100%', height: 2, zIndex: 1000 }}>
+          <View style={styles.track}>
           </View>
         </View>
       </View>
@@ -177,5 +177,6 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: '#fff'
-  }
+  },
+  track: { backgroundColor: '#999', width: '100%', height: 2, zIndex: 1000 }
 })
