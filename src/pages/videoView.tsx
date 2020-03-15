@@ -8,7 +8,6 @@ import React, { Component } from 'react'
 import {
   ActivityIndicator,
   Image,
-  NativeModules,
   PanResponder,
   PanResponderInstance,
   StatusBar,
@@ -21,6 +20,7 @@ import Util from '../utils/util'
 import Video from 'react-native-video'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
 import Control from '../components/control'
+import RateView from '../components/RateView'
 
 interface IState {
   volume: number;
@@ -79,7 +79,6 @@ export default class VideoView extends Component<any, IState> {
   private statusHeight: number
   private video: InstanceType<typeof Video>
   private controlRef: React.RefObject<any> = React.createRef()
-  private rateView: { left: number } = { left: 0 }
 
   constructor(props: any) {
     super(props)
@@ -125,7 +124,7 @@ export default class VideoView extends Component<any, IState> {
         //清除定时器
         this.clearTimeout()
         if (this.state.rateShow) {
-          if (e.nativeEvent.pageX < this.rateView.left) {
+          if (e.nativeEvent.pageX < this.videoScreen.width - 120) {
             this.setState({
               rateShow: false
             })
@@ -203,11 +202,15 @@ export default class VideoView extends Component<any, IState> {
     this.setState({ rateShow })
   }
 
+  changeRate = (rate: number) => {
+    this.setState({ rate })
+  }
+
   render() {
     const { navigation } = this.props
     const { videoData } = navigation.state.params
     const videoScreen = this.videoScreen
-    const { loading, controlShow, isPortrait, volume, resizeMode, paused, muted, currentTime, duration, rate } = this.state
+    const { loading, rateShow, controlShow, isPortrait, volume, resizeMode, paused, muted, currentTime, duration, rate } = this.state
 
     const controlConfig = {
       duration,
@@ -285,77 +288,7 @@ export default class VideoView extends Component<any, IState> {
           }]}>
             <Header title={videoData.title} controlShow={controlShow} navigation={navigation} isPortrait={isPortrait}/>
             {/*rate*/}
-            <View onLayout={(ev) => {
-              // console.log('on rate Layout', ev.nativeEvent.layout)
-              NativeModules.UIManager.measure(ev.target, (x, y, width, height, pageX, pageY) => {
-                // console.log(x, y, width, height, pageX, pageY)
-                this.rateView.left = pageX
-              })
-            }} style={{
-              zIndex: 100,
-              width: 120,
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              position: 'absolute',
-              top: 0,
-              right: this.state.rateShow ? 0 : -1000,
-              // right: true ? 0 : -1000,
-              backgroundColor: 'rgba(0,0,0,0.5)'
-            }}>
-
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    rate: 1,
-                    rateShow: false
-                  })
-                }}
-                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#fff' }}>1.0</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    rate: 1.25,
-                    rateShow: false
-                  })
-                }}
-                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#fff' }}>1.25</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    rate: 1.5,
-                    rateShow: false
-                  })
-                }}
-                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#fff' }}>1.5</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    rate: 1.75,
-                    rateShow: false
-                  })
-                }}
-                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#fff' }}>1.75</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({
-                    rate: 2.0,
-                    rateShow: false
-                  })
-                }}
-                style={{ height: 50, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#fff' }}>2.0</Text>
-              </TouchableOpacity>
-            </View>
+            <RateView rateShow={rateShow} changeRate={this.changeRate}/>
             {controlShow && <View style={[{
               width: '100%',
               height: 60,
