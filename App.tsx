@@ -9,6 +9,7 @@ import WPSOfficeScreen from './src/WPSOfficeScreen'
 import videoView from './src/pages/videoView'
 import Hot from './src/pages/hot'
 import PanResponderExample from './src/TextProgress'
+import PdfView from './src/PdfView'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -35,8 +36,8 @@ function HomeScreen(props: {
         onPress={() => props.navigation.navigate('PanResponderExample')}
       />
       <Button
-        title="to FileViewerScreen.tsx"
-        onPress={() => props.navigation.navigate('FileViewerScreen')}
+        title="PdfView"
+        onPress={() => props.navigation.navigate('PdfView')}
       />
     </View>
   )
@@ -104,6 +105,7 @@ const RootStack = createStackNavigator(
     FileViewerScreen,
     WebViewTest,
     WPSOfficeScreen,
+    PdfView,
     Hot,
     PanResponderExample,
     videoView: {

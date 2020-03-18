@@ -5128,6 +5128,11 @@ react-native-orientation-locker@^1.1.8:
   resolved "http://192.168.2.116:4873/react-native-orientation-locker/-/react-native-orientation-locker-1.1.8.tgz#45d1c9e002496b8d286ec8932d6e3e7d341f9c85"
   integrity sha1-RdHJ4AJJa40obsiTLW4+fTQfnIU=
 
+react-native-pdf-view@^0.3.2:
+  version "0.3.2"
+  resolved "http://192.168.2.116:4873/react-native-pdf-view/-/react-native-pdf-view-0.3.2.tgz#aca9887079bf8f71a3123e23d6ee36f55724a9d8"
+  integrity sha1-rKmIcHm/j3GjEj4j1u429Vckqdg=
+
 react-native-safe-area-view@^0.14.1:
   version "0.14.8"
   resolved "http://192.168.2.116:4873/react-native-safe-area-view/-/react-native-safe-area-view-0.14.8.tgz#ef33c46ff8164ae77acad48c3039ec9c34873e5b"
