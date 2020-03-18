@@ -59,7 +59,10 @@ class RateView extends React.PureComponent<IProps> {
       position: 'absolute',
       top: 0,
       right: 0,
-      translateX: this.state.right,
+      transform:[{
+        translateX: this.state.right,
+      }],// 这种写法兼容 iOS 和 Android
+      //         translateX: this.state.right, 只兼容 Android
       backgroundColor: 'rgba(0,0,0,0.5)'
     }}>
 

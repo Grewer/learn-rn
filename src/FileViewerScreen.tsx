@@ -7,10 +7,10 @@ class FileViewerScreen extends React.Component {
   constructor({ props }: { props: any }) {
     super(props)
 
-    const url = 'https://grewer.github.io/dataSave/office/test.doc'
+    const url = 'https://grewer.github.io/dataSave/office/test.pdf'
+    // 使用的是原生 pdf 查看器
 
-
-    const localFile = `${RNFS.DocumentDirectoryPath}/test.doc`
+    const localFile = `${RNFS.DocumentDirectoryPath}/test.pdf`
 
     const options = {
       fromUrl: url,

@@ -34,6 +34,10 @@ function HomeScreen(props: {
         title="to progress test "
         onPress={() => props.navigation.navigate('PanResponderExample')}
       />
+      <Button
+        title="to FileViewerScreen.tsx"
+        onPress={() => props.navigation.navigate('FileViewerScreen')}
+      />
     </View>
   )
 }
