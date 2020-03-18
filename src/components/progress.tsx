@@ -36,6 +36,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     }
   }
   private isMove: boolean = false
+  private record = 0
 
   constructor(props: any) {
     super(props)
@@ -54,8 +55,9 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       onPanResponderGrant: (evt) => {
         this.onStart(evt)
       },
-      onPanResponderMove: (evt) => {
-        if (Math.abs(evt.nativeEvent.locationX) > 1) {
+      onPanResponderMove: (evt, gestureState) => {
+        if (Math.abs(gestureState.vx) > 0) {
+          // console.log('onMove', evt.nativeEvent.locationX)
           this.onMove(evt)
         }
       },
@@ -88,20 +90,26 @@ export default class Progress extends React.PureComponent<IProps, {}> {
 
   //触摸点移动时回调
   onMove = (e: GestureResponderEvent) => {
+    // console.log(this.pageX, e.nativeEvent.pageX)
     //获取手指相对屏幕 x的坐标，并设计拖动按钮的位置，拖动按钮不能超出进度条的位置
-    this.pageX = e.nativeEvent.pageX
+    const pageX = e.nativeEvent.pageX
+    this.pageX = pageX
+    // this.record = pageX
     // console.log(this.pageX,this.progressLocation.pageX)
     const progressLength = this.progressLocation.pageX
-    if (e.nativeEvent.pageX <= progressLength) {
+    if (pageX <= progressLength) {
       this.pageX = progressLength
-    } else if (e.nativeEvent.pageX > (progressLength + this.progressLocation.width - 10)) {
+    } else if (pageX > (progressLength + this.progressLocation.width - 10)) {
       //-10的目的是为了修正触摸点的直径，防止超过100%
       this.pageX = progressLength + this.progressLocation.width - 10
     }
     const rate = (this.pageX - progressLength) / this.progressLocation.width
-    this.props.onMove && this.props.onMove(rate)
     this.progressStyles.style.width = (rate * 100).toFixed(0) + '%'
     this._updateNativeStyles()
+    if (Math.abs(this.record - pageX) > 30) {
+      this.record = pageX
+      this.props.onMove && this.props.onMove(rate)
+    }
   }
 
   //触摸结束时回调
