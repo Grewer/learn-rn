@@ -138,7 +138,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
   }
 
   render() {
-    console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width), this.progressLocation)
+    // console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width), this.progressLocation)
     // Slider
     return (
       <View style={this.props.style} onLayout={this.onLayout}>
