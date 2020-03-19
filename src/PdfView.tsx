@@ -7,7 +7,7 @@ import RNFS, { DownloadBeginCallbackResult, DownloadProgressCallbackResult, exis
 // PDFView.android.js 去掉 PropTypes 相关
 
 class PdfView extends React.Component {
-  state = { src: undefined }
+  state = { src: '' }
 
 
   async componentDidMount() {
