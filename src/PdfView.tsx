@@ -5,7 +5,7 @@ import RNFS, { DownloadBeginCallbackResult, DownloadProgressCallbackResult, exis
 // 需要修改的地方
 // 1. Android/build.gradle  修改
 // PDFView.android.js 去掉 PropTypes 相关
-
+// 不使用此库
 class PdfView extends React.Component {
   state = { src: '' }
 
