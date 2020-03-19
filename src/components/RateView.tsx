@@ -1,6 +1,6 @@
 import React from 'react'
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import AnimatedValue = Animated.AnimatedValue
+type AnimatedValue = Animated.AnimatedValue
 
 interface IProps {
   changeRate: (rate: number) => void

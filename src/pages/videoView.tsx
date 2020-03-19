@@ -113,7 +113,7 @@ export default class VideoView extends Component<any, IState> {
         let { dx, dy } = gestureState
         return (Math.abs(dx) > 5) || (Math.abs(dy) > 5)
       },
-      onPanResponderGrant: (e, g) => {
+      onPanResponderGrant: (e) => {
         // console.log('view onPanResponderGrant', e.nativeEvent, g)
         //显示控制层
         if (!this.state.controlShow) {
