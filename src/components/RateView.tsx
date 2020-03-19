@@ -23,7 +23,7 @@ class RateView extends React.PureComponent<IProps, IState> {
       {
         toValue,
         easing: Easing.ease,
-        duration: 300,
+        duration: 200,
         isInteraction: false,
         useNativeDriver: true
       }
@@ -66,6 +66,7 @@ class RateView extends React.PureComponent<IProps, IState> {
       {
         ['1.0', '1.25', '1.5', '1.75', '2.0'].map(rate => {
           return <TouchableOpacity
+            key={rate}
             onPress={() => {
               changeRate(Number(rate))
             }}

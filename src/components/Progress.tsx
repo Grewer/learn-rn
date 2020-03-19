@@ -23,6 +23,7 @@ interface IProps {
   value: number
   onMove?: (rate: number) => void
   onStart?: () => void
+  gap: number
 }
 
 export default class Progress extends React.PureComponent<IProps, {}> {
@@ -38,7 +39,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
   private isMove: boolean = false
   private record = 0
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props)
     this.pageX = 0//记录触摸按钮的位置
     //进度条的位置和长度
@@ -106,7 +107,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     const rate = (this.pageX - progressLength) / this.progressLocation.width
     this.progressStyles.style.width = (rate * 100).toFixed(0) + '%'
     this._updateNativeStyles()
-    if (Math.abs(this.record - pageX) > 30) {
+    if (Math.abs(this.record - pageX) > (this.props.gap || 1)) {
       this.record = pageX
       this.props.onMove && this.props.onMove(rate)
     }

@@ -19,7 +19,7 @@ import {
 import Util from '../utils/util'
 import Video from 'react-native-video'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
-import Control from '../components/control'
+import Control from '../components/Control'
 import RateView from '../components/RateView'
 
 interface IState {

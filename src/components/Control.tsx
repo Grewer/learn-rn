@@ -2,12 +2,12 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Util from '../utils/util'
 import Orientation from 'react-native-orientation-locker'
-import Progress from './progress'
+import Progress from './Progress'
 
 interface IProps {
   changeCurrentTime: (rate: number) => void
   changeProgress: (rate: number) => void
-  changeRateVisible: (visible:boolean) => void
+  changeRateVisible: (visible: boolean) => void
   currentTime: number
   duration: number
   paused: boolean
@@ -38,6 +38,51 @@ const StartAndPaused: React.FC<Pick<IProps, 'changePaused' | 'paused'>> = React.
 })
 
 
+type IControlRight = {
+  changeRateVisible(visible: boolean): void,
+  isPortrait: boolean,
+  rate: number,
+}
+const ControlRight: React.FC<IControlRight> = React.memo((props) => {
+  const { changeRateVisible, isPortrait, rate } = props
+  return <View style={styles.toolRight}>
+
+    <TouchableOpacity
+      onPress={() => {
+        changeRateVisible(true)
+      }}
+      style={{
+        height: '100%',
+        width: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <Text
+        style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      onPress={() => {
+        if (isPortrait) {
+          Orientation.lockToLandscapeRight()
+        } else {
+          Orientation.lockToPortrait()
+        }
+      }}
+      style={{
+        height: '100%',
+        width: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <Image style={{ height: 25, width: 25 }}
+             source={require('../images/bigscreen.png')}/>
+    </TouchableOpacity>
+
+  </View>
+})
+
+
 class Control extends React.Component<IProps> {
 
   state = {
@@ -63,12 +108,13 @@ class Control extends React.Component<IProps> {
 
   render() {
     const { moveTime } = this.state
-    const { changePaused, paused, duration, currentTime, rate, isPortrait } = this.props
+    const { changePaused, paused, duration, currentTime, rate, isPortrait, changeRateVisible } = this.props
     const time = moveTime ? moveTime : currentTime
     console.log('render control', currentTime / duration)
     return (
       <>
         <Progress style={styles.slider}
+                  gap={10}
                   value={currentTime / duration}
                   onMove={this.changeMoveTime}
                   onEnd={this.complete}
@@ -82,46 +128,7 @@ class Control extends React.Component<IProps> {
             }}>{Util.formSecondTotHMS(time)}</Text>
             <TotalTime duration={duration}/>
           </View>
-
-          <View style={styles.toolRight}>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.changeRateVisible(true)
-                // this.setState({
-                //   rateShow: true
-                // })
-              }}
-              style={{
-                height: '100%',
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Text
-                style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                if (isPortrait) {
-                  Orientation.lockToLandscapeRight()
-                } else {
-                  Orientation.lockToPortrait()
-                }
-              }}
-              style={{
-                height: '100%',
-                width: 50,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <Image style={{ height: 25, width: 25 }}
-                     source={require('../images/bigscreen.png')}/>
-            </TouchableOpacity>
-
-          </View>
-
+          <ControlRight rate={rate} isPortrait={isPortrait} changeRateVisible={changeRateVisible}/>
         </View>
       </>
     )
