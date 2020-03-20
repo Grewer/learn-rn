@@ -93,7 +93,6 @@ class Control extends React.Component<IProps> {
   }
 
   complete = (rate: number) => {
-    console.log(rate)
     if (!this.props.paused) {
       this.setState({ moveTime: 0 })
     }

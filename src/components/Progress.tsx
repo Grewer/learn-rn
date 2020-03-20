@@ -94,7 +94,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     const progressLength = this.progressLocation.pageX
     if (pageX <= progressLength) {
       this.pageX = progressLength
-    } else if (pageX > (progressLength + this.progressLocation.width - 10)) {
+    } else if (pageX > (progressLength + this.progressLocation.width - 20)) {
       //-10的目的是为了修正触摸点的直径，防止超过100%
       this.pageX = progressLength + this.progressLocation.width - 10
     }
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
   currentProgress: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 2,
-    backgroundColor: '#fff',
+    height: 3,
+    backgroundColor: '#17AAFF',
     zIndex: 1001
   },
   dragWrap: {
@@ -174,12 +174,13 @@ const styles = StyleSheet.create({
     height: 30,
   },
   drag: {
-    borderRadius: 8,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 10,
-    height: 10,
-    backgroundColor: '#fff'
+    width: 20,
+    height: 20,
+    backgroundColor: '#fff',
+    zIndex: 1001
   },
-  track: { backgroundColor: '#999', width: '100%', height: 2, zIndex: 1000 }
+  track: { backgroundColor: '#999', width: '100%', height: 3, zIndex: 1000 }
 })
