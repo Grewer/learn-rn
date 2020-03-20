@@ -343,9 +343,6 @@ export default class VideoView extends Component<IProps, IState> {
   onEnd = () => {
     console.log('onEnd')
     this.video.seek(0)
-    setTimeout(() => {
-      this.setState({ paused: true })
-    }, 100)
     if (this.controlRef.current) {
       this.controlRef.current.clearMoveTime()
     }
