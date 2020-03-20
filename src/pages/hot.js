@@ -1,107 +1,40 @@
-/**
- * @author lmy
- * @date 2019/08/04 下午12:37
- * @desc
- */
-
 import React, {Component} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-
-import Util from '../utils/util'
-import VideoData from "../mockdata/videodata";
+import VideoView from './videoView'
 
 export default class Hot extends Component {
+    //
+    static navigationOptions = ({navigation}) => {
+        return {
+            header: null,
+        }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [],
-        }
-        for (let i = 0; i < 50; i++) {
-            let item = {
-                name: 'ing',
-                data: i + '你好----' + i
-            }
-            item.key = "" + i;
-            this.state.data.push(item);
-        }
     }
-
 
     render() {
+        //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
+        const addr4 = require('../assets/4.mp4')
+        const addr1 = require('../assets/1.mp4')
+        let addr = Math.random() > 0.5 ? addr1 : addr4
+        // addr = require('../assets/index.m3u8')
+        // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
+        // addr = {uri: 'https://www.runoob.com/try/demo_source/movie.mp4'}
+        // addr = {
+        //   uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
+        //   type: 'm3u8'
+        // }
+        //
+        // addr = {
+        //   // uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311144549981/playlist.m3u8',
+        //   uri: 'http://192.168.0.106:7888/playlist.m3u8',
+        //   type: 'm3u8',
+        //   headers: {
+        //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
+        //   }
+        // }
 
-        let width = (Util.getWidth() - 2) / 3;
-        let height = width;
-        return (
-            <ScrollView
-                ref={"scrollView"}
-                automaticallyAdjustContentInsets={false}
-                horizontal={false}
-                style={{flex: 1}}
-
-            >
-                <View style={{flexWrap: 'wrap', flexDirection: 'row', width: Util.getWidth()}}>
-
-
-                    {this.state.data.map((item, i) => {
-                        let picNum = Math.floor(Math.random() * 10);
-                        if (picNum == 0 || picNum == 10) {
-                            picNum = 1;
-                        }
-                        let imageHeight = width;
-                        let imageWidth = height;
-                        let whRate = VideoData[picNum].width / VideoData[picNum].height;
-                        if (whRate > 1) {
-                            imageWidth = imageWidth * whRate;
-                        } else {
-                            imageHeight = imageWidth / whRate;
-                        }
-
-
-                        return (
-
-                            <TouchableOpacity onPress={() => {
-                                this.props.navigation.navigate('videoView', {videoData: VideoData[picNum]})
-                            }}
-                                              key={i} style={{
-                                marginBottom: 1,
-                                width: width + (i % 3 == 1 ? 2 : 0),
-                                backgroundColor: '#fff',
-                                height: height,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}>
-                                <View style={{
-                                    backgroundColor: '#fff',
-                                    width: width,
-                                    height: height,
-                                    justifyContent: 'flex-start',
-                                    alignItems: 'center',
-                                    overflow: 'hidden'
-                                }}>
-
-                                    <Text>testimage</Text>
-
-                                </View>
-                            </TouchableOpacity>)
-                    })
-                    }
-                </View>
-            </ScrollView>
-        );
-    }
-
-    shouldComponentUpdate() {
-    }
-
-    componentDidMount() {
-        const {navigation} = this.props;
-        console.log("Hot didMount")
-        console.log(JSON.stringify(navigation));
-        console.log(navigation)
-    }
-
-    componentWillUnmount() {
+        return (<VideoView goBack={() => {
+            this.props.navigation.goBack()
+        }} title="文件名称"  source={addr}/>);
     }
 
 }

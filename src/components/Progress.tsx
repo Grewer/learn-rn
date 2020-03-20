@@ -1,9 +1,3 @@
-/**
- * @author lmy
- * @date 2019/08/04 下午12:37
- * @desc 进度条
- */
-
 import React from 'react'
 import {
   GestureResponderEvent,

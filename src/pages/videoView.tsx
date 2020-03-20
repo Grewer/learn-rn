@@ -1,26 +1,17 @@
-/**
- * @author lmy
- * @date 2019/08/04 下午12:37
- * @desc 视频播放页面,通过改变屏幕方向
- */
-
 import React, { Component } from 'react'
-import {
-  ActivityIndicator,
-  Image,
-  PanResponder,
-  PanResponderInstance,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { ActivityIndicator, PanResponder, PanResponderInstance, StatusBar, StyleSheet, View } from 'react-native'
 import Util from '../utils/util'
-import Video from 'react-native-video'
+import Video, { VideoProperties } from 'react-native-video'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
 import Control from '../components/Control'
 import RateView from '../components/RateView'
+import VideoHeader from '../components/VideoHeader'
+
+interface IProps extends VideoProperties {
+  goBack(): void
+
+  title: string
+}
 
 interface IState {
   volume: number;
@@ -36,42 +27,7 @@ interface IState {
   muted: boolean
 }
 
-const Header: React.FC<{
-  controlShow: boolean
-  isPortrait: boolean
-  navigation: {
-    goBack(): void
-  }
-  title: string
-}> = React.memo((props) => {
-  return <View style={{
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%',
-    height: 50,
-    position: 'absolute',
-    top: (props.controlShow) ? 0 : -1000,
-    left: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)'
-  }}>
-
-    <TouchableOpacity
-      onPress={() => {
-        if (props.isPortrait) {
-          props.navigation.goBack()
-        } else {
-          Orientation.lockToPortrait()
-        }
-      }}
-      style={{ height: '100%', width: 40, justifyContent: 'center', alignItems: 'center' }}>
-      <Image style={{ height: 30, width: 30 }} source={require('../images/back.png')}/>
-    </TouchableOpacity>
-
-    <Text style={{ color: '#fff' }}>{props.title}</Text>
-  </View>
-})
-export default class VideoView extends Component<any, IState> {
+export default class VideoView extends Component<IProps, IState> {
   private timeOut: NodeJS.Timeout
   private panResponder: PanResponderInstance
   private videoRatio: { rate?: number; width: number; height: number }
@@ -79,12 +35,13 @@ export default class VideoView extends Component<any, IState> {
   private statusHeight: number
   private video: InstanceType<typeof Video>
   private controlRef: React.RefObject<any> = React.createRef()
+  private isIphoneX: boolean
 
   constructor(props: any) {
     super(props)
-    //页面时初始事，锁定屏幕为竖屏
+    //页面初始，锁定屏幕为竖屏
     Orientation.lockToPortrait()
-
+    this.isIphoneX = Util.isIPhoneX()
     //初始化页面参数
     this.state = {
       rate: 1,// 用于倍速播放，0.0-暂停播放，1.0-正常速率播放，其他值 - 自定义速率，例如0.5慢速播放或者2.0快速播放
@@ -103,7 +60,6 @@ export default class VideoView extends Component<any, IState> {
     //处理触摸事件
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => {
-        console.log('onStartShouldSetPanResponder')
         return true
       },
       onPanResponderTerminationRequest: () => {
@@ -207,11 +163,9 @@ export default class VideoView extends Component<any, IState> {
   }
 
   render() {
-    const { navigation } = this.props
-    const { videoData } = navigation.state.params
+    const { goBack, title, source, ...rest } = this.props
     const videoScreen = this.videoScreen
     const { loading, rateShow, controlShow, isPortrait, volume, resizeMode, paused, muted, currentTime, duration, rate } = this.state
-
     const controlConfig = {
       duration,
       paused, rate,
@@ -223,31 +177,11 @@ export default class VideoView extends Component<any, IState> {
       changeRateVisible: this.changeRateVisible
     }
 
-    //由于没有服务器视频地址，项目中模拟两类(宽高比>1,<=1)视频
-    const addr4 = require('../assets/4.mp4')
-    const addr1 = require('../assets/1.mp4')
-    let addr = videoData.videoUrl.indexOf('4.') != -1 ? addr4 : addr1
-    // addr = require('../assets/index.m3u8')
-    // addr = { uri: 'https://grewer.github.io/dataSave/test.mp4' }
-    addr = { uri: 'https://www.runoob.com/try/demo_source/movie.mp4' }
-    // addr = {
-    //   uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311111154670/playlist.m3u8',
-    //   type: 'm3u8'
-    // }
-    //
-    // addr = {
-    //   // uri: 'http://qiniu.sishuxuefu.com/ssvideo/%E6%9D%AD%E5%B7%9E%E6%98%A0%E5%83%8F%E8%AF%97-20200311144549981/playlist.m3u8',
-    //   uri: 'http://192.168.0.106:7888/playlist.m3u8',
-    //   type: 'm3u8',
-    //   headers: {
-    //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
-    //   }
-    // }
     console.log('render video views', loading)
     return (
       <View style={{
         paddingTop: videoScreen.paddingTop,
-        paddingLeft: Util.isPlatform('ios') ? videoScreen.paddingLeft : 0, // 安卓显示问题
+        paddingLeft: this.isIphoneX ? videoScreen.paddingLeft : 0,
         flex: 1,
         justifyContent: isPortrait ? 'flex-start' : 'center',
         alignItems: isPortrait ? 'center' : 'flex-start',
@@ -263,7 +197,7 @@ export default class VideoView extends Component<any, IState> {
                  allowsExternalPlayback={true}
                  onLoadStart={this.startLoading}
                  onReadyForDisplay={this.stopLoading}
-                 source={addr}
+                 source={source}
                  style={{ width: '100%', height: '100%' }}
                  rate={rate}
                  paused={paused}
@@ -279,6 +213,7 @@ export default class VideoView extends Component<any, IState> {
                  }}
                  playInBackground={true}
                  useTextureView={false} // android 某种设置 test
+                 {...rest}
           />
           <View style={[styles.loading, styles.horizontal]}>
             <ActivityIndicator size="large" color="#b0b0b0" animating={loading}/>
@@ -286,19 +221,10 @@ export default class VideoView extends Component<any, IState> {
           <View {...this.panResponder.panHandlers} style={[styles.touchContainer, {
             width: this.videoScreen.width,
           }]}>
-            <Header title={videoData.title} controlShow={controlShow} navigation={navigation} isPortrait={isPortrait}/>
+            <VideoHeader title={title} controlShow={controlShow} goBack={goBack} isPortrait={isPortrait}/>
             {/*rate*/}
             <RateView rateShow={rateShow} changeRate={this.changeRate}/>
-            {controlShow && <View style={[{
-              width: '100%',
-              height: 60,
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              backgroundColor: 'rgba(0,0,0,0.5)'
-            },
-              // { left: controlShow ? 0 : -1000 }
-            ]}>
+            {controlShow && <View style={styles.control}>
                 <Control ref={this.controlRef} {...controlConfig}/>
             </View>}
           </View>
@@ -336,9 +262,9 @@ export default class VideoView extends Component<any, IState> {
 
     //竖屏
     if (isPortrait) {
-      if (Util.isIPhoneX()) {
+      if (this.isIphoneX) {
         this.statusHeight = 40
-        this.videoScreen.height = this.videoScreen.height - 64
+        this.videoScreen.height = this.videoScreen.height - 74
       } else {
         this.statusHeight = 20
         this.videoScreen.height = this.videoScreen.height - 20
@@ -352,9 +278,9 @@ export default class VideoView extends Component<any, IState> {
       this.videoScreen.paddingTop = this.statusHeight
       this.videoScreen.paddingLeft = 0
     } else {//横屏
-      if (Util.isIPhoneX()) {
-        this.statusHeight = 42
-        this.videoScreen.width = this.videoScreen.width - 64
+      if (this.isIphoneX) {
+        this.statusHeight = 40
+        this.videoScreen.width = this.videoScreen.width - 74
       } else {
         if (Util.isPlatform('android')) {
           this.videoScreen.height = this.videoScreen.height - StatusBar.currentHeight || 0
@@ -362,7 +288,7 @@ export default class VideoView extends Component<any, IState> {
       }
       // 横屏设置left
       this.videoScreen.paddingTop = 0
-      this.videoScreen.paddingLeft = 24
+      this.videoScreen.paddingLeft = 34
     }
 
     console.log(this.videoScreen)
@@ -376,8 +302,8 @@ export default class VideoView extends Component<any, IState> {
         this.videoScreen.height = this.videoScreen.width / this.videoRatio.rate
       }
     }
-
   }
+
   //设置视频的播放进度
   changeProgress = (time: number) => {
     this.video.seek(time)
@@ -424,6 +350,14 @@ export default class VideoView extends Component<any, IState> {
 }
 
 const styles = StyleSheet.create({
+  control: {
+    width: '100%',
+    height: 65,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
   loading: {
     justifyContent: 'center',
     alignItems: 'flex-start',
