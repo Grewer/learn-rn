@@ -126,7 +126,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       console.log('onLayout', x, y, width, height, pageX)
       this.progressLocation = {
         name: 'progressLocation',
-        pageX: 20,
+        pageX: x,
         width: width - 20,
       }
     })
