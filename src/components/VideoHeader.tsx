@@ -8,7 +8,7 @@ const VideoHeader: React.FC<{
   isPortrait: boolean
   goBack(): void
   title: string
-  renderMenu?: () => React.ReactNode
+  renderMenu?: (isPortrait:boolean) => React.ReactNode
 }> = React.memo((props) => {
   return <View style={styles.container}>
     <TouchableOpacity
@@ -25,7 +25,7 @@ const VideoHeader: React.FC<{
 
     <Text style={{ color: '#fff' }}>{props.title}</Text>
 
-    {props.renderMenu && props.renderMenu()}
+    {props.renderMenu && props.renderMenu(props.isPortrait)}
   </View>
 })
 

@@ -10,7 +10,7 @@ import VideoHeader from '../components/VideoHeader'
 interface IProps extends VideoProperties {
   goBack(): void
 
-  renderMenu?: () => React.ReactNode
+  renderMenu?: (isPortrait:boolean) => React.ReactNode
 
   title: string
 }
