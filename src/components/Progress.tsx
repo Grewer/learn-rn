@@ -127,7 +127,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       this.progressLocation = {
         name: 'progressLocation',
         pageX: 20,
-        width: width - 20,
+        width: width - 40,
       }
     })
   }
@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#fff',
     zIndex: 3001,
+    transform: [{ translateX: -10 }]
   },
-  track: { backgroundColor: '#999', flex: 1, height: 3, zIndex: 1000 }
+  track: { backgroundColor: '#999', flex: 1, height: 3, zIndex: 1000, position: 'absolute', left: 0, right: 0 }
 })
