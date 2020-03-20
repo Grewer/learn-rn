@@ -96,7 +96,7 @@ class Control extends React.Component<IProps> {
     if (!this.props.paused) {
       this.setState({ moveTime: 0 })
     }
-    console.log(rate, this.props.duration)
+    console.log('control complete',rate, this.props.duration)
     this.props.changeProgress(rate * this.props.duration)
   }
 
@@ -108,7 +108,7 @@ class Control extends React.Component<IProps> {
     return (
       <>
         <Progress style={styles.slider}
-                  gap={10}
+                  gap={5}
                   value={currentTime / duration}
                   onMove={this.changeMoveTime}
                   onEnd={this.complete}
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
   slider: {
-    width: '100%',
+    flex: 1,
     height: 30,
     justifyContent: 'center',
   },

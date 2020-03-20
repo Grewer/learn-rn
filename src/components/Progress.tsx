@@ -90,13 +90,13 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     const pageX = e.nativeEvent.pageX
     this.pageX = pageX
     // this.record = pageX
-    // console.log(this.pageX,this.progressLocation.pageX)
+    console.log(this.pageX, this.progressLocation.pageX)
     const progressLength = this.progressLocation.pageX
     if (pageX <= progressLength) {
       this.pageX = progressLength
-    } else if (pageX > (progressLength + this.progressLocation.width - 20)) {
+    } else if (pageX > (progressLength + this.progressLocation.width)) {
       //-10的目的是为了修正触摸点的直径，防止超过100%
-      this.pageX = progressLength + this.progressLocation.width - 10
+      this.pageX = progressLength + this.progressLocation.width
     }
     const rate = (this.pageX - progressLength) / this.progressLocation.width
     this.progressStyles.style.width = (rate * 100).toFixed(0) + '%'
@@ -126,8 +126,8 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       console.log('onLayout', x, y, width, height, pageX)
       this.progressLocation = {
         name: 'progressLocation',
-        pageX: x,
-        width,
+        pageX: 20,
+        width: width - 20,
       }
     })
   }
@@ -136,7 +136,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
     // console.log('render progress', ((this.pageX - this.progressLocation.pageX) / this.progressLocation.width), this.progressLocation)
     // Slider
     return (
-      <View style={this.props.style} onLayout={this.onLayout}>
+      <View style={[this.props.style, { paddingHorizontal: 20 }]} onLayout={this.onLayout}>
         <View style={styles.maxProgress}>
           <View ref={(ref) => {
             this.progress = ref
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     backgroundColor: '#fff',
-    zIndex: 1001
+    zIndex: 1001,
   },
-  track: { backgroundColor: '#999', width: '100%', height: 3, zIndex: 1000 }
+  track: { backgroundColor: '#999', flex: 1, height: 3, zIndex: 1000 }
 })

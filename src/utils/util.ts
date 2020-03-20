@@ -39,25 +39,11 @@ export default class Util {
   }
 
   //把传入的秒数格式化成 时分秒（00：00：00），
-  static formSecondTotHMS(second: number) {
-    let _second = parseInt(`${second}`)
-    let hh = 0, mm = 0, ss = 0
-    if (_second > 0) {
-      ss = parseInt(`${_second % 60}`)
-      mm = _second / 60
-      mm = parseInt(`${mm % 60}`)
-      hh = parseInt(`${_second / 3600}`)
-    }
-    // 补零
-    let zero = (v: number) => {
-      return (v >> 0) < 10 ? '0' + v : v
-    }
-
-    if (hh == 0) {
-      return zero(mm) + ':' + zero(ss)
-    } else {
-      return zero(hh) + ':' + zero(mm) + ':' + zero(ss)
-    }
+   static formSecondTotHMS = (seconds: number): string => {
+    const minute: number = Math.floor(seconds / 60)
+    return `${minute.toString().padStart(2, '0')}:${Math.floor(seconds - minute * 60)
+      .toString()
+      .padStart(2, '0')}`
   }
 
 }
