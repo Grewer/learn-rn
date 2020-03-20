@@ -126,7 +126,7 @@ export default class Progress extends React.PureComponent<IProps, {}> {
       console.log('onLayout', x, y, width, height, pageX)
       this.progressLocation = {
         name: 'progressLocation',
-        pageX: x,
+        pageX: 20,
         width: width - 20,
       }
     })
@@ -165,13 +165,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 3,
     backgroundColor: '#17AAFF',
-    zIndex: 1001
+    zIndex: 1001,
   },
   dragWrap: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 10,
+    width: 20,
     height: 30,
+    zIndex: 3001,
   },
   drag: {
     borderRadius: 10,
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     backgroundColor: '#fff',
-    zIndex: 1001,
+    zIndex: 3001,
   },
   track: { backgroundColor: '#999', flex: 1, height: 3, zIndex: 1000 }
 })
