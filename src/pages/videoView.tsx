@@ -10,6 +10,8 @@ import VideoHeader from '../components/VideoHeader'
 interface IProps extends VideoProperties {
   goBack(): void
 
+  renderMenu?: () => React.ReactNode
+
   title: string
 }
 
@@ -163,7 +165,7 @@ export default class VideoView extends Component<IProps, IState> {
   }
 
   render() {
-    const { goBack, title, source, ...rest } = this.props
+    const { goBack, title, source, renderMenu, ...rest } = this.props
     const videoScreen = this.videoScreen
     const { loading, rateShow, controlShow, isPortrait, volume, resizeMode, paused, muted, currentTime, duration, rate } = this.state
     const controlConfig = {
@@ -185,10 +187,11 @@ export default class VideoView extends Component<IProps, IState> {
         flex: 1,
         justifyContent: isPortrait ? 'flex-start' : 'center',
         alignItems: isPortrait ? 'center' : 'flex-start',
-        backgroundColor: '#ccc',
+        backgroundColor: 'black',
         position: 'relative'
       }}>
-        <View style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
+        <View {...this.panResponder.panHandlers}
+              style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
           {/*关于 iOS 加载 HTTP https://www.npmjs.com/package/react-native-video#ios-app-transport-security*/}
           <Video ref={(ref) => {
             this.video = ref
@@ -218,16 +221,16 @@ export default class VideoView extends Component<IProps, IState> {
           <View style={[styles.loading, styles.horizontal]}>
             <ActivityIndicator size="large" color="#b0b0b0" animating={loading}/>
           </View>
-          <View {...this.panResponder.panHandlers} style={[styles.touchContainer, {
+          {controlShow && <View style={[styles.touchContainer, {
             width: this.videoScreen.width,
           }]}>
-            <VideoHeader title={title} controlShow={controlShow} goBack={goBack} isPortrait={isPortrait}/>
-            {/*rate*/}
-            <RateView rateShow={rateShow} changeRate={this.changeRate}/>
-            {controlShow && <View style={styles.control}>
-                <Control ref={this.controlRef} {...controlConfig}/>
-            </View>}
-          </View>
+              <VideoHeader renderMenu={renderMenu} title={title} controlShow={controlShow} goBack={goBack}
+                           isPortrait={isPortrait}/>
+              <RateView rateShow={rateShow} changeRate={this.changeRate}/>
+              <View style={styles.control}>
+                  <Control ref={this.controlRef} {...controlConfig}/>
+              </View>
+          </View>}
         </View>
       </View>
     )

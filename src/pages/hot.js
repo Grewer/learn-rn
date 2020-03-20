@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import VideoView from './videoView'
+import {Text} from 'react-native'
 
 export default class Hot extends Component {
     //
@@ -31,10 +32,9 @@ export default class Hot extends Component {
         //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
         //   }
         // }
-
         return (<VideoView goBack={() => {
             this.props.navigation.goBack()
-        }} title="文件名称"  source={addr}/>);
+        }} title="文件名称xxxxxxxxxxxxxxxxxx" renderMenu={() => <Text style={{color:'#fff'}}>额外目录</Text>} source={addr}/>);
     }
 
 }

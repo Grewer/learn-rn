@@ -19,7 +19,6 @@ interface IProps {
 const TotalTime: React.FC<{ duration: number }> = React.memo((props) => {
   return <Text style={{
     color: '#fff',
-    fontSize: 12
   }}>{` / ${Util.formSecondTotHMS(props.duration)}`}</Text>
 })
 
@@ -32,7 +31,7 @@ const StartAndPaused: React.FC<Pick<IProps, 'changePaused' | 'paused'>> = React.
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-    <Image style={{ height: 25, width: 25 }}
+    <Image style={props.paused ? { height: 20, width: 20 } : { height: 16, width: 16 }}
            source={props.paused ? require('../images/play.png') : require('../images/pause.png')}/>
   </TouchableOpacity>
 })
@@ -61,24 +60,20 @@ const ControlRight: React.FC<IControlRight> = React.memo((props) => {
         style={{ color: '#fff' }}>{rate == 1 ? '倍速' : rate + 'x'}</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity
-      onPress={() => {
-        if (isPortrait) {
+    {isPortrait && <TouchableOpacity
+        onPress={() => {
           Orientation.lockToLandscapeRight()
-        } else {
-          Orientation.lockToPortrait()
-        }
-      }}
-      style={{
-        height: '100%',
-        width: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-      <Image style={{ height: 25, width: 25 }}
-             source={require('../images/bigscreen.png')}/>
+        }}
+        style={{
+          height: '100%',
+          width: 50,
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        <Image style={{ height: 16, width: 16 }}
+               source={require('../images/bigScreen.png')}/>
     </TouchableOpacity>
-
+    }
   </View>
 })
 
@@ -86,7 +81,7 @@ const ControlRight: React.FC<IControlRight> = React.memo((props) => {
 class Control extends React.Component<IProps> {
 
   state = {
-    moveTime: 0
+    moveTime: 0 // 控制显示的时间
   }
 
   changeMoveTime = (rate: number) => {
@@ -124,7 +119,6 @@ class Control extends React.Component<IProps> {
             <StartAndPaused paused={paused} changePaused={changePaused}/>
             <Text style={{
               color: '#fff',
-              fontSize: 12
             }}>{Util.formSecondTotHMS(time)}</Text>
             <TotalTime duration={duration}/>
           </View>
