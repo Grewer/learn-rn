@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    height: 30
+    height: 30,
+    position: 'relative'
   },
   currentProgress: {
     justifyContent: 'center',
@@ -166,6 +167,8 @@ const styles = StyleSheet.create({
     height: 3,
     backgroundColor: '#17AAFF',
     zIndex: 1001,
+    borderTopLeftRadius: 3,
+    borderBottomLeftRadius: 3
   },
   dragWrap: {
     justifyContent: 'center',
@@ -184,5 +187,14 @@ const styles = StyleSheet.create({
     zIndex: 3001,
     transform: [{ translateX: -10 }]
   },
-  track: { backgroundColor: '#999', flex: 1, height: 3, zIndex: 1000, position: 'absolute', left: 0, right: 0 }
+  track: {
+    backgroundColor: '#999',
+    flex: 1,
+    height: 3,
+    zIndex: 1000,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    borderRadius: 3,
+  }
 })
