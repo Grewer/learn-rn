@@ -6,7 +6,6 @@ import DocViewerScreen from './src/DocViewerScreen'
 import FileViewerScreen from './src/FileViewerScreen'
 import WebViewTest from './src/WebViewTest'
 import WPSOfficeScreen from './src/WPSOfficeScreen'
-import videoView from './src/pages/videoView'
 import Hot from './src/pages/hot'
 import PanResponderExample from './src/TextProgress'
 import ViewPDF from './src/ViewPDF'
@@ -48,55 +47,6 @@ HomeScreen.navigationOptions = {
 }
 
 
-const stackNavigatorConfig = {
-  initialRouteName: 'Home',//初始页面
-  navigationOptions: {
-    gesturesEnabled: false,
-  },
-
-  transitionConfig: () => ({
-    transitionSpec: {
-      duration: 400,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing,
-    },
-    screenInterpolator: (sceneProps: { layout: any; position: any; scene: any; navigation: any; }) => {
-      const { layout, position, scene } = sceneProps
-      const { route } = scene
-      const params = route.params || {}
-      //专场效果，根据modeStyle设置
-      const modeStyle = params.modeStyle
-      const { index } = scene
-      const Width = layout.initWidth
-      const height = layout.initHeight
-      //沿X轴平移
-      const translateX = position.interpolate({
-        inputRange: [index - 1, index, index + 1],
-        outputRange: [Width, 0, -(Width - 10)],
-      })
-      //沿Y轴平移
-      const translateY = position.interpolate({
-        inputRange: [index - 1, index, index + 1],
-        outputRange: [height, 0, 0],
-      })
-      //透明度
-      const opacity = position.interpolate({
-        inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1],
-      })
-      if (modeStyle == 'up') {
-        return { opacity, transform: [{ translateY }] }
-      } else if (modeStyle == 'opacity') {
-        return { opacity }
-      } else {
-        return { opacity, transform: [{ translateX }] }
-      }
-    }
-  }),
-
-}
-
-
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
@@ -108,12 +58,6 @@ const RootStack = createStackNavigator(
     ViewPDF,
     Hot,
     PanResponderExample,
-    videoView: {
-      screen: videoView,
-      navigationOptions: {
-        header: null
-      }
-    },
   },
   {
     // ...stackNavigatorConfig,
