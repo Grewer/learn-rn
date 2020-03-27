@@ -40,7 +40,6 @@ export default class Hot extends Component<any> {
     //     userAgent:`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.34 Safari/537.36"`,
     //   }
     // }
-    console.log(this.state)
     // return (
     //   this.state.url ? <>
     //     <StatusBar barStyle={'light-content'}/>
@@ -50,12 +49,15 @@ export default class Hot extends Component<any> {
     //                source={this.state.url as any}/></> : null)
 
     const source = {
-      uri: encodeURI('http://qiniu.sishuxuefu.com/ssvideo/杭州映像诗_20200326115841975/playlist.m3u8?e=1585211981&token=p3v42BrJsrPpJDETZ60-2vT68noVfbTX525CFhvB:itX4AoKrehhljo4cyHPY6eKjc3s='),
-      type: 'm3u8'
+      uri: encodeURI('http://192.168.0.106:8080/test.mp4'),
+      // type: 'm3u8'
     }
+    console.log(source)
     return (
       <VideoView goBack={() => {
         this.props.navigation.goBack()
+      }} onError={err => {
+        console.log(err)
       }} title="文件名称xxxxxxxxxxxxxxxxxx" renderMenu={() => <Text style={{ color: '#fff' }}>额外目录</Text>}
                  source={source}/>
     )

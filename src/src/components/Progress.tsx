@@ -11,7 +11,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import shallowEqual from '../utils/shallowEqual'
 
 interface IProps {
   style: StyleProp<ViewStyle>
@@ -32,9 +31,6 @@ export default class Progress extends Component<IProps, {}> {
       width: '0%',
     },
   }
-
-  private isMove = false
-  private record = 0
 
   constructor(props: IProps) {
     super(props)
@@ -75,13 +71,6 @@ export default class Progress extends Component<IProps, {}> {
     })
   }
 
-  shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<{}>): boolean {
-    if (this.isMove) {
-      return false
-    }
-    return !shallowEqual(nextProps, this.props)
-  }
-
   _updateNativeStyles = () => {
     this.progress && this.progress.setNativeProps(this.progressStyles)
   }
@@ -89,7 +78,6 @@ export default class Progress extends Component<IProps, {}> {
   onStart = (e: GestureResponderEvent) => {
     // 获取 按钮的 x的位置
     this.pageX = e.nativeEvent.pageX
-    this.isMove = true
     this.props.onStart && this.props.onStart()
   }
 
@@ -99,7 +87,6 @@ export default class Progress extends Component<IProps, {}> {
     // 获取手指相对屏幕 x的坐标，并设计拖动按钮的位置，拖动按钮不能超出进度条的位置
     const { pageX } = e.nativeEvent
     this.pageX = pageX
-    // this.record = pageX
     // console.log(this.pageX, this.progressLocation.pageX)
     const progressLength = this.progressLocation.pageX
     if (pageX <= progressLength) {
@@ -111,15 +98,11 @@ export default class Progress extends Component<IProps, {}> {
     const rate = (this.pageX - progressLength) / this.progressLocation.width
     this.progressStyles.style.width = `${(rate * 100).toFixed(0)}%`
     this._updateNativeStyles()
-    if (Math.abs(this.record - pageX) > (this.props.gap || 1)) {
-      this.record = pageX
-      this.props.onMove && this.props.onMove(rate)
-    }
+    this.props.onMove && this.props.onMove(rate)
   }
 
   // 触摸结束时回调
   onEnd = () => {
-    this.isMove = false
     this.props.onEnd && this.props.onEnd((this.pageX - this.progressLocation.pageX) / this.progressLocation.width)
   }
 
@@ -127,7 +110,7 @@ export default class Progress extends Component<IProps, {}> {
     // let {x, y, width, height} = event.nativeEvent.layout;
     // 拿到这个view的x位置和宽度
     // @ts-ignore
-    NativeModules.UIManager.measure(event.target, (x, y, width, height, pageX, pageY) => {
+    NativeModules.UIManager.measure(event.target, (x, y, width) => {
       // 安卓手机获取的值与ios不一样，特殊处理
       // if (Util.isPlatform('android')) {
       //   // x = pageX + 10
@@ -151,12 +134,10 @@ export default class Progress extends Component<IProps, {}> {
             ref={ref => {
               this.progress = ref
             }}
-            style={[styles.currentProgress, this.isMove ? {} : { width: `${(this.props.value || 0) * 100}%` }]}
+            style={[styles.currentProgress, { width: `${(this.props.value || 0) * 100}%` }]}
           />
-          <View {...this.panResponder.panHandlers} style={styles.dragWrap}>
-            <View style={styles.drag} />
-          </View>
-          <View style={styles.track} />
+          <View {...this.panResponder.panHandlers} style={styles.drag}/>
+          <View style={styles.track}/>
         </View>
       </View>
     )
@@ -180,13 +161,6 @@ const styles = StyleSheet.create({
     height: 20,
     justifyContent: 'center',
     transform: [{ translateX: -10 }],
-    width: 20,
-    zIndex: 3001,
-  },
-  dragWrap: {
-    alignItems: 'center',
-    height: 30,
-    justifyContent: 'center',
     width: 20,
     zIndex: 3001,
   },

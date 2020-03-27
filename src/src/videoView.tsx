@@ -1,14 +1,12 @@
 import * as React from 'react'
 import { Component, createRef } from 'react'
 import { ActivityIndicator, PanResponder, PanResponderInstance, StatusBar, StyleSheet, View } from 'react-native'
-import Video, { VideoProperties } from 'react-native-video'
+import Video from 'react-native-video'
 import Orientation, { OrientationType } from 'react-native-orientation-locker'
 import Util from './utils/util'
 import Control from './components/Control'
 import RateView from './components/RateView'
 import VideoHeader from './components/VideoHeader'
-
-// todo 不适用 VideoProperties
 
 export interface VideoPropsType {
   /**
@@ -28,13 +26,21 @@ export interface VideoPropsType {
 
   /**
    *  文件源
+   *  如果文件路径有中文记得使用 encodeURI
+   *  如果需要播放 m3u8 ,需要添加 type:'m3u8'
+   *  如果 uri 是一个本地文件地址,那暂不支持播放
    * */
-  source: VideoProperties['source']
+  source: { uri?: string; type?: string; headers?: { [key: string]: any } } | number
 
   /**
    *  加载错误时的 callback
    * */
-  onError?: VideoProperties['onError']
+  onError?(error: {
+    error: {
+      '': string
+      errorString: string
+    }
+  }): void
 
   /**
    * 默认倍数的显示
@@ -46,7 +52,7 @@ export interface VideoPropsType {
    * 视频缩放模式
    * @default contain
    * */
-  resizeMode?: VideoProperties['resizeMode']
+  resizeMode?: 'stretch' | 'contain' | 'cover' | 'none'
 }
 
 interface VideoViewStateType {
@@ -70,7 +76,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
   private statusHeight: number
   private video: InstanceType<typeof Video>
   private controlRef: React.RefObject<any> = createRef()
-  private isIphoneX: boolean
+  private readonly isIphoneX: boolean
 
   constructor(props: any) {
     super(props)
@@ -114,6 +120,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
         // 清除定时器
         this.clearTimeout()
         if (this.state.rateShow) {
+          // 隐藏右边的变速
           if (e.nativeEvent.pageX < this.videoScreen.width - 120) {
             this.setState({
               rateShow: false,
@@ -175,6 +182,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
   }
 
   startLoading = () => {
+    console.log('startLoading')
     this.setState({ loading: true })
   }
 
@@ -277,10 +285,15 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
     }))
   }
 
+  private _updateVideo = (value: { [key: string]: any }) => {
+    // @ts-ignore
+    this.video && this.video.setNativeProps(value)
+  }
+
   // 加载视频获取视频相关参数
   onLoad = (data: any) => {
     // 如果在安卓中已经播放
-    // console.log('onLoad', data)
+    console.log('onLoad', data)
     if (Util.isPlatform('android')) {
       this.stopLoading()
     }
@@ -301,9 +314,6 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
   onEnd = () => {
     // console.log('onEnd')
     this.video.seek(0)
-    if (this.controlRef.current) {
-      this.controlRef.current.clearMoveTime()
-    }
   }
 
   render() {
@@ -321,6 +331,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
       changePaused: this.changePaused,
       changeRateVisible: this.changeRateVisible,
       defaultRateLabel,
+      _updateVideo: this._updateVideo,
     }
 
     // console.log('render video views', loading)
@@ -336,13 +347,17 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
           position: 'relative',
         }}
       >
-        <View {...this.panResponder.panHandlers} style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
+        <View {...this.panResponder.panHandlers}
+              style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
           {/* 关于 iOS 加载 HTTP https://www.npmjs.com/package/react-native-video#ios-app-transport-security */}
           <Video
             reportBandwidth
             allowsExternalPlayback
             onLoadStart={this.startLoading}
-            onReadyForDisplay={this.stopLoading}
+            onReadyForDisplay={() => {
+              this.stopLoading()
+              console.log('onReadyForDisplay amdroid')
+            }}
             source={source}
             style={{ width: '100%', height: '100%' }}
             rate={rate}
@@ -358,15 +373,26 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
               this.stopLoading()
               onError && onError(err)
             }}
-            playInBackground
+            onSeek={data => {
+              console.log(data)
+            }}
             useTextureView={false} // android 某种设置 test
             ref={ref => {
               this.video = ref
             }}
+            onTimedMetadata={()=>{
+              console.log('onTimedMetadata')
+            }}
+            onBuffer={()=>{
+              console.log('onBuffer')
+            }}
           />
-          <View style={[styles.loading, styles.horizontal]}>
-            <ActivityIndicator size="large" color="#b0b0b0" animating={loading} />
-          </View>
+          {loading && (
+            <View style={[styles.loading, styles.horizontal]}>
+              <ActivityIndicator size="large" color="#b0b0b0"/>
+            </View>
+          )}
+
           {controlShow && (
             <View
               style={[
@@ -376,8 +402,9 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
                 },
               ]}
             >
-              <VideoHeader renderMenu={renderMenu} title={title} controlShow={controlShow} goBack={goBack} isPortrait={isPortrait} />
-              <RateView rateShow={rateShow} changeRate={this.changeRate} />
+              <VideoHeader renderMenu={renderMenu} title={title} controlShow={controlShow} goBack={goBack}
+                           isPortrait={isPortrait}/>
+              <RateView rateShow={rateShow} changeRate={this.changeRate}/>
               <View style={styles.control}>
                 <Control ref={this.controlRef} {...controlConfig} />
               </View>
