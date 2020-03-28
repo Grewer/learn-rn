@@ -136,8 +136,8 @@ export default class Progress extends Component<IProps, {}> {
             }}
             style={[styles.currentProgress, { width: `${(this.props.value || 0) * 100}%` }]}
           />
-          <View {...this.panResponder.panHandlers} style={styles.drag}/>
-          <View style={styles.track}/>
+          <View {...this.panResponder.panHandlers} style={styles.drag} />
+          <View style={styles.track} />
         </View>
       </View>
     )

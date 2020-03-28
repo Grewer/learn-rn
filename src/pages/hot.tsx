@@ -49,7 +49,8 @@ export default class Hot extends Component<any> {
     //                source={this.state.url as any}/></> : null)
 
     const source = {
-      uri: encodeURI('http://192.168.0.106:8080/test.mp4'),
+      // uri: encodeURI('http://192.168.0.106:8080/test.mp4'),
+      uri: encodeURI('http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4'),
       // type: 'm3u8'
     }
     console.log(source)
