@@ -53,6 +53,8 @@ export interface VideoPropsType {
    * @default contain
    * */
   resizeMode?: 'stretch' | 'contain' | 'cover' | 'none'
+
+  height: number
 }
 
 interface VideoViewStateType {
@@ -335,7 +337,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
   }
 
   render() {
-    const { goBack, title, source, renderMenu, onError, defaultRateLabel, resizeMode } = this.props
+    const { goBack, title, source, renderMenu, onError, defaultRateLabel, resizeMode, height } = this.props
     const { videoScreen } = this
     const { loading, rateShow, controlShow, isPortrait, volume, paused, muted, currentTime, duration, rate } = this.state
     const controlConfig = {
@@ -356,16 +358,21 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
     return (
       <View
         style={{
-          paddingTop: videoScreen.paddingTop,
+          paddingTop: height ? 0 : videoScreen.paddingTop,
           paddingLeft: this.isIphoneX ? videoScreen.paddingLeft : 0,
-          flex: 1,
+          flex: height ? 0 : 1,
           justifyContent: isPortrait ? 'flex-start' : 'center',
           alignItems: isPortrait ? 'center' : 'flex-start',
           backgroundColor: 'black',
           position: 'relative',
         }}
       >
-        <View {...this.panResponder.panHandlers} style={{ width: videoScreen.width, height: videoScreen.height, backgroundColor: 'black' }}>
+        <View {...this.panResponder.panHandlers}
+              style={{
+                width: videoScreen.width,
+                height: height ? (isPortrait ? height : '100%') : videoScreen.height,
+                backgroundColor: 'black'
+              }}>
           {/* 关于 iOS 加载 HTTP https://www.npmjs.com/package/react-native-video#ios-app-transport-security */}
           <Video
             reportBandwidth
@@ -397,7 +404,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
           />
           {loading && (
             <View style={[styles.loading, styles.horizontal]}>
-              <ActivityIndicator size="large" color="#b0b0b0" />
+              <ActivityIndicator size="large" color="#b0b0b0"/>
             </View>
           )}
 
@@ -410,8 +417,9 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
                 },
               ]}
             >
-              <VideoHeader renderMenu={renderMenu} title={title} controlShow={controlShow} goBack={goBack} isPortrait={isPortrait} />
-              <RateView rateShow={rateShow} changeRate={this.changeRate} />
+              <VideoHeader renderMenu={renderMenu} title={title} controlShow={controlShow} goBack={goBack}
+                           isPortrait={isPortrait}/>
+              <RateView rateShow={rateShow} changeRate={this.changeRate}/>
               <View style={styles.control}>
                 <Control ref={this.controlRef} {...controlConfig} />
               </View>

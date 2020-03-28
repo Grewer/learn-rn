@@ -6,7 +6,7 @@ export default class Hot extends Component<any> {
   //
   static navigationOptions = ({ navigation }) => {
     return {
-      header: null,
+      // header: null,
     }
 
   }
@@ -59,7 +59,9 @@ export default class Hot extends Component<any> {
         this.props.navigation.goBack()
       }} onError={err => {
         console.log(err)
-      }} title="文件名称xxxxxxxxxxxxxxxxxx" renderMenu={() => <Text style={{ color: '#fff' }}>额外目录</Text>}
+      }}
+                 height={300}
+                 title="文件名称xxxxxxxxxxxxxxxxxx" renderMenu={() => <Text style={{ color: '#fff' }}>额外目录</Text>}
                  source={source}/>
     )
   }
