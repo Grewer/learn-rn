@@ -54,7 +54,10 @@ export interface VideoPropsType {
    * */
   resizeMode?: 'stretch' | 'contain' | 'cover' | 'none'
 
-  height: number
+  /**
+   * 视频高度
+   **/
+  height?: number
 }
 
 interface VideoViewStateType {
@@ -215,6 +218,7 @@ export default class VideoView extends Component<VideoPropsType, VideoViewStateT
 
     let width = Util.getWidth()
     let height = Util.getHeight()
+    // console.log(width,height)
 
     if (Util.isPlatform('android') && this.state.isPortrait !== isPortrait) {
       width = Util.getHeight()
