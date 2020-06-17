@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animated, Button, Easing, Text, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import Main from './src/Main'
 import DocViewerScreen from './src/DocViewerScreen'
@@ -9,35 +9,37 @@ import WPSOfficeScreen from './src/WPSOfficeScreen'
 import Hot from './src/pages/hot'
 import PanResponderExample from './src/TextProgress'
 import ViewPDF from './src/ViewPDF'
+import ScrollPage from './src/pages/ScrollPage'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
 }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="to video "
-        onPress={() => props.navigation.navigate('Hot')}
-      />
+      {/*<Text>Home Screen</Text>*/}
+      {/*<Button*/}
+      {/*  title="to video "*/}
+      {/*  onPress={() => props.navigation.navigate('Hot')}*/}
+      {/*/>*/}
 
-      <TouchableOpacity
-        onLongPress={() => console.log('onLongPress')}
-      >
-        <Text>长按测试</Text>
-      </TouchableOpacity>
-      <Button
-        title="to WebViewTest "
-        onPress={() => props.navigation.navigate('WebViewTest')}
-      />
-      <Button
-        title="to progress test "
-        onPress={() => props.navigation.navigate('PanResponderExample')}
-      />
-      <Button
-        title="ViewPDF"
-        onPress={() => props.navigation.navigate('ViewPDF')}
-      />
+      {/*<TouchableOpacity*/}
+      {/*  onLongPress={() => console.log('onLongPress')}*/}
+      {/*>*/}
+      {/*  <Text>长按测试</Text>*/}
+      {/*</TouchableOpacity>*/}
+      {/*<Button*/}
+      {/*  title="to WebViewTest "*/}
+      {/*  onPress={() => props.navigation.navigate('WebViewTest')}*/}
+      {/*/>*/}
+      {/*<Button*/}
+      {/*  title="to progress test "*/}
+      {/*  onPress={() => props.navigation.navigate('PanResponderExample')}*/}
+      {/*/>*/}
+      {/*<Button*/}
+      {/*  title="ViewPDF"*/}
+      {/*  onPress={() => props.navigation.navigate('ViewPDF')}*/}
+      {/*/>*/}
+      <ScrollPage/>
     </View>
   )
 }
