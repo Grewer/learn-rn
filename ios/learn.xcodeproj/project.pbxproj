@@ -25,6 +25,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1754EF25A3054960A816B273 /* libReactNativeViewPDF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0AD85E32ED4E58BCED1980 /* libReactNativeViewPDF.a */; };
+		18C0744A249CC5DB0069E5D7 /* nativeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C07449249CC5DB0069E5D7 /* nativeModule.m */; };
 		1C8D83A8D58E443386CD0D60 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3705D0A38E4E2BB4AC8C99 /* libRNGestureHandler.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -455,6 +456,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = learn/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = learn/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		18C07414249CC5BB0069E5D7 /* nativeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nativeModule.h; sourceTree = "<group>"; };
+		18C07449249CC5DB0069E5D7 /* nativeModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = nativeModule.m; sourceTree = "<group>"; };
 		1C503BC6ACD547799A51DCE9 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* learn-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "learn-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* learn-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "learn-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -644,6 +647,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				18C07449249CC5DB0069E5D7 /* nativeModule.m */,
+				18C07414249CC5BB0069E5D7 /* nativeModule.h */,
 			);
 			name = learn;
 			sourceTree = "<group>";
@@ -1535,6 +1540,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				18C0744A249CC5DB0069E5D7 /* nativeModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
