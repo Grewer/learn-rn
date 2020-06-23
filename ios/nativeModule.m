@@ -140,7 +140,6 @@ RCT_EXPORT_METHOD(postNotificationEvent:(NSString *)name)
 }
 
 RCT_EXPORT_METHOD(Send){
-  NSLog(@"run");
   NSDictionary *dict = @{@"name" : @"veuimyzi"};
   
   NSNotification *notification = [[NSNotification alloc] initWithName:@"EventReminder" object:nil userInfo:dict] ;

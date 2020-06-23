@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { Button, NativeEventEmitter, NativeModules, Text, View } from 'react-native'
 
 export const NativeProps = createContext([])
@@ -10,13 +10,19 @@ const ManagerEmitter = new NativeEventEmitter(nativeModule)
 
 function ConnectNative(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
-  images: string[]
 }) {
+
+  const [msg, setMsg] = useState([])
 
   useEffect(() => {
     const subscription = ManagerEmitter.addListener(
       'EventReminder',
-      (reminder) => console.log('这是监听的EventReminder事件回复', reminder.name)
+      (reminder) => {
+        setMsg(prevState => {
+          return prevState.concat(reminder.name)
+        })
+        console.log('这是监听的EventReminder事件回复', reminder.name)
+      }
     )
 
     console.log(ManagerEmitter)
@@ -25,7 +31,7 @@ function ConnectNative(props: {
     }
   }, [])
 
-  console.log(nativeModule)
+  console.log(nativeModule, msg)
   // addHelloWord: ƒ fn()
   // getConstants: ƒ ()
   // getHBDeviceUniqueID: ƒ fn()
@@ -64,6 +70,11 @@ function ConnectNative(props: {
       <Button title={'js 监听事件,让 native 给 js 发通知 send'} onPress={() => {
         nativeModule.Send()
       }}/>
+      {
+        msg.map((item, index) => {
+          return <Text key={item + index}>item:{item}</Text>
+        })
+      }
     </View>
   )
 }
