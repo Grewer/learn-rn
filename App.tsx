@@ -9,6 +9,7 @@ import Hot from './src/pages/hot'
 import PanResponderExample from './src/TextProgress'
 import ViewPDF from './src/ViewPDF'
 import ConnectNative, { NativeProps } from './src/pages/ConnectNative'
+import IconSolution from './src/pages/IconSolution'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -18,6 +19,9 @@ function HomeScreen(props: {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button title={'跳转至与 native 交互页面'} onPress={() => {
         props.navigation.navigate('ConnectNative')
+      }}/>
+      <Button title={'跳转至 icon 解决方案'} onPress={() => {
+        props.navigation.navigate('IconSolution')
       }}/>
     </View>
   )
@@ -37,6 +41,7 @@ const RootStack = createStackNavigator(
     WPSOfficeScreen,
     ViewPDF,
     Hot,
+    IconSolution,
     PanResponderExample,
   },
   {

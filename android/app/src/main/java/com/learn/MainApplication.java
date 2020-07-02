@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.horcrux.svg.SvgPackage;
+import com.horcrux.svg.SvgPackage;
 import com.rumax.reactnative.pdfviewer.PDFViewPackage;
 import com.reactnativecommunity.slider.ReactSliderPackage;
 import org.wonday.orientation.OrientationPackage;
@@ -35,7 +36,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SvgPackage(),
             new PDFViewPackage(),
             new ReactSliderPackage(),
             new OrientationPackage(),
@@ -46,7 +46,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFileViewerPackage(),
             new RNGestureHandlerPackage(),
             new RNFSPackage(),
-            new RNReactNativeDocViewerPackage()
+            new RNReactNativeDocViewerPackage(),
+                        new SvgPackage()
       );
     }
 
