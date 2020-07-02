@@ -138,8 +138,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-svg')
     implementation project(':react-native-view-pdf')
-    implementation project(':react-native-pdf-view')
     implementation project(':@react-native-community_slider')
     implementation project(':react-native-orientation-locker')
     implementation project(':react-native-linear-gradient')
