@@ -10,6 +10,7 @@ import PanResponderExample from './src/TextProgress'
 import ViewPDF from './src/ViewPDF'
 import ConnectNative, { NativeProps } from './src/pages/ConnectNative'
 import IconSolution from './src/pages/IconSolution'
+import ViewTxt from './src/txtView/ViewTxt'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -22,6 +23,9 @@ function HomeScreen(props: {
       }}/>
       <Button title={'跳转至 icon 解决方案'} onPress={() => {
         props.navigation.navigate('IconSolution')
+      }}/>
+      <Button title={'跳转至 txt,md 预览'} onPress={() => {
+        props.navigation.navigate('ViewTxt')
       }}/>
     </View>
   )
@@ -43,13 +47,14 @@ const RootStack = createStackNavigator(
     Hot,
     IconSolution,
     PanResponderExample,
+    ViewTxt
   },
   {
     // ...stackNavigatorConfig,
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: '#1eb0f4',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

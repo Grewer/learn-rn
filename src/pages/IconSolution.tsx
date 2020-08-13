@@ -5,6 +5,7 @@ import IconStyle from '../iconfont/IconStyle'
 import IconNormal from '../iconfont/IconNormal'
 import IconClassSvg from '../iconfont/IconClassSvg'
 import IconInlineStyle from '../iconfont/IconInlineStyle'
+import IconRoutesWork from './IconRoutesWork'
 
 class IconSolution extends React.Component {
 
@@ -12,6 +13,7 @@ class IconSolution extends React.Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>IconSolution !</Text>
+        <IconRoutesWork />
         <IconFont name="zantong" size={20}/>
         <IconFont color="red" name="zantong-fill" size={16}/>
         <IconStyle size={100}/>
