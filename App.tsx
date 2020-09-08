@@ -11,6 +11,7 @@ import ViewPDF from './src/ViewPDF'
 import ConnectNative, { NativeProps } from './src/pages/ConnectNative'
 import IconSolution from './src/pages/IconSolution'
 import ViewTxt from './src/txtView/ViewTxt'
+import SocketMain from './src/socket/SocketMain'
 
 function HomeScreen(props: {
   navigation: { navigate: { (arg0: string, arg1: { name: string; }): void; (arg0: string, arg1: { name: string; }): void; (arg0: string): void; }; }
@@ -18,14 +19,17 @@ function HomeScreen(props: {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title={'跳转至与 native 交互页面'} onPress={() => {
-        props.navigation.navigate('ConnectNative')
-      }}/>
-      <Button title={'跳转至 icon 解决方案'} onPress={() => {
-        props.navigation.navigate('IconSolution')
-      }}/>
-      <Button title={'跳转至 txt,md 预览'} onPress={() => {
-        props.navigation.navigate('ViewTxt')
+      {/*<Button title={'跳转至与 native 交互页面'} onPress={() => {*/}
+      {/*  props.navigation.navigate('ConnectNative')*/}
+      {/*}}/>*/}
+      {/*<Button title={'跳转至 icon 解决方案'} onPress={() => {*/}
+      {/*  props.navigation.navigate('IconSolution')*/}
+      {/*}}/>*/}
+      {/*<Button title={'跳转至 txt,md 预览'} onPress={() => {*/}
+      {/*  props.navigation.navigate('ViewTxt')*/}
+      {/*}}/>*/}
+      <Button title={'跳转至 socket.io 页面'} onPress={() => {
+        props.navigation.navigate('socket')
       }}/>
     </View>
   )
@@ -47,7 +51,8 @@ const RootStack = createStackNavigator(
     Hot,
     IconSolution,
     PanResponderExample,
-    ViewTxt
+    ViewTxt,
+    SocketMain
   },
   {
     // ...stackNavigatorConfig,
