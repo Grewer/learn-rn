@@ -29,7 +29,7 @@ function HomeScreen(props: {
       {/*  props.navigation.navigate('ViewTxt')*/}
       {/*}}/>*/}
       <Button title={'跳转至 socket.io 页面'} onPress={() => {
-        props.navigation.navigate('socket')
+        props.navigation.navigate('SocketMain')
       }}/>
     </View>
   )
